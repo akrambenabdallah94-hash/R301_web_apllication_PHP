@@ -11,9 +11,11 @@
             $BMW = new Voiture('AB-123-CD', 'BMW', 'noir', 5);
             $Renault = new Voiture('EF-458-GH', 'Ranault', 'blanc', 5);
 
+            $BMW->setMarque([]);
+
             echo $BMW;
             echo "<br>$Renault</br>";
 
         ?>
     </body> 
-</html> 
+</html>
