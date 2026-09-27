@@ -12,16 +12,16 @@
             return static::$databases['login'];
         } 
 
-        static public function getHostname() : string {
-            retrun static::$databases['hostname'];
+        static public function getHostname() : string{
+            return static::$databases['hostname'];
         }
 
         static public function getDatabase() : string {
             return static::$databases['database'];
         }
 
-        static public function getPassword() : string {
-            return static::$password['password'];
+        static public function getPassword() : string{
+            return static::$databases['password'];
         }
 
     }
