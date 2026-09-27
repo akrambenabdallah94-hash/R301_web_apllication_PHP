@@ -13,7 +13,7 @@
         } 
 
         static public function getHostname() : string{
-            retrun static::$databases['hostname'];
+            return static::$databases['hostname'];
         }
 
         static public function getDatabase() : string {
@@ -21,7 +21,7 @@
         }
 
         static public function getPassword() : string{
-            return static::$password['password'];
+            return static::$databases['password'];
         }
 
     }
