@@ -8,8 +8,8 @@
             'password'=>''
         );
 
-        static public fuction getLogin() : string{
-            return static::$database['login'];
+        static public function getLogin() : string {
+            return static::$databases['login'];
         } 
 
     }
