@@ -12,5 +12,17 @@
             return static::$databases['login'];
         } 
 
+        static public function getHostname() : string{
+            retrun static::$databases['hostname'];
+        }
+
+        static public function getDatabase() : string {
+            return static::$databases['database'];
+        }
+
+        static public function getPassword() : string{
+            return static::$password['password'];
+        }
+
     }
 ?>
