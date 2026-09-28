@@ -2,14 +2,15 @@
     require_once "Conf.php";
 
     class Model{
+        private static $instance = null;
         private $pdo;
         private string $hostname;
         private string $login;
         private string $password;
         private string $databaseName;
 
-        public function getPdo(){
-            return $this->pdo;
+        public static function getPdo(){
+            return static::getInstance()->pdo;
         }
 
         public function __construct(){
@@ -18,6 +19,12 @@
             $this->password = Conf::getPassword();
             $this->databaseName = Conf::getDatabase();
             $this->pdo = new PDO("mysql:host={$this->hostname};dbname={$this->databaseName}",$this->login,$this->password);
+        }
+
+        private static function getInstance(){
+            if(is_null(static::$instance))
+                static::$instance = new Model();
+            return static::$instance;
         }
     }
 ?>
