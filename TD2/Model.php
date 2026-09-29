@@ -18,7 +18,8 @@
             $this->login = Conf::getLogin();
             $this->password = Conf::getPassword();
             $this->databaseName = Conf::getDatabase();
-            $this->pdo = new PDO("mysql:host={$this->hostname};dbname={$this->databaseName}",$this->login,$this->password);
+            $this->pdo = new PDO("mysql:host={$this->hostname};dbname={$this->databaseName}",$this->login,$this->password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 
         private static function getInstance(){
