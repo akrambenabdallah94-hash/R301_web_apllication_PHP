@@ -4,10 +4,9 @@
 
     $model = new Model();
     $pdoStatement = $model->getPdo()->query('SELECT * FROM voiture');
-    $voitureFormatTableau = $pdoStatement->fetch();
 
-    var_dump($voitureFormatTableau);
-
-    $voiture = new Voiture($voitureFormatTableau["immatriculationBDD"], $voitureFormatTableau["marqueBDD"], $voitureFormatTableau["couleurBDD"], $voitureFormatTableau["nbSiegesBDD"]);
-    echo $voiture;
+    foreach($pdoStatement as $voitureFormatTableau){
+        $voiture = new Voiture($voitureFormatTableau["immatriculationBDD"], $voitureFormatTableau["marqueBDD"], $voitureFormatTableau["couleurBDD"], $voitureFormatTableau["nbSiegesBDD"]);
+        echo $voiture . "<br>";
+    }
 ?>
