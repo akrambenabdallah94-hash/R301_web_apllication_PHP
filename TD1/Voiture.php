@@ -38,7 +38,20 @@
                 $this->nbSieges = $nbSieges;
             }
 
+            public static function construire(array $voitureFormatTableau): Voiture{
+                return new Voiture($voitureFormatTableau["immatriculation"], $voitureFormatTableau["marque"], $voitureFormatTableau["couleur"], $voitureFormatTableau["nbSieges"]);
+            }
 
+            public static function getVoitures(): array{
+                $model = new Model();
+                $pdoStatement = $model->getPdo()->query('SELECT * FROM voiture');
+                $voitures = [];
+                foreach($pdoStatement as $voitureFormatTableau){
+                    $voitures[] = self::construire($voitureFormatTableau);
+                }
+                return $voitures;
+            }
+            
             public function __construct(string $immatriculation, string $marque, string $couleur, int $nbSieges){
                 $this->immatriculation = substr($immatriculation,0, 8);
                 $this->marque = $marque;
