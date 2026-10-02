@@ -4,89 +4,47 @@
         private string $villeDepart;
         private string $villeArrivee;
         private string $dateDepart;
-        private string $dateArrivee;
         private int $nbPlaces;
         private float $prix;
-        private Utilisateur $login;
+        private string $conducteurLogin;
 
-        public function getId(): int {
-            return $this->id;
-        }   
-
-        public function getVilleDepart(): string {
-            return $this->villeDepart;
+        public static function construire(array $trajetFormatTableau): Trajet {
+            // Remarque : Si le tableau vient de la BDD, le champ 'login' ou 'utilisateur_login' 
+            // devra être converti en objet Utilisateur si nécessaire (via Utilisateur::getUtilisateurByLogin par exemple).
+            // Ici, on suppose que l'on récupère l'objet ou qu'on le charge.
+            return new Trajet(
+                $trajetFormatTableau["id"], 
+                $trajetFormatTableau["depart"], 
+                $trajetFormatTableau["arrivee"], 
+                $trajetFormatTableau["date"], 
+                $trajetFormatTableau["nbPlaces"], 
+                $trajetFormatTableau["prix"], 
+                $trajetFormatTableau["conducteurLogin"]
+            );
         }
 
-        public function getVilleArrivee(): string {
-            return $this->villeArrivee;
+        public static function getTrajets(): array {
+            $model = new Model();
+            $pdoStatement = $model->getPdo()->query('SELECT * FROM trajet');
+            $trajets = [];
+            foreach($pdoStatement as $trajetFormatTableau) {
+                $trajets[] = self::construire($trajetFormatTableau);
+            }
+            return $trajets;
         }
 
-        public function getDateDepart(): string {
-            return $this->dateDepart;
-        }
-
-        public function getDateArrivee(): string {
-            return $this->dateArrivee;
-        }
-
-        public function getNbPlaces(): int {
-            return $this->nbPlaces;
-        }
-
-        public function getPrix(): float {
-            return $this->prix;
-        }
-
-        public function getLogin(): Utilisateur {
-            return $this->login;
-        }
-
-        public function setId(int $id): void {
-            $this->id = $id;
-        }
-
-        public function setVilleDepart(string $villeDepart): void {
-            $this->villeDepart = $villeDepart;
-        }
-
-        public function setVilleArrivee(string $villeArrivee): void {
-            $this->villeArrivee = $villeArrivee;
-        }
-
-        public function setDateDepart(string $dateDepart): void {
-            $this->dateDepart = $dateDepart;
-        }
-
-        public function setDateArrivee(string $dateArrivee): void {
-            $this->dateArrivee = $dateArrivee;
-        }
-
-        public function setNbPlaces(int $nbPlaces): void {
-            $this->nbPlaces = $nbPlaces;
-        }
-
-        public function setPrix(float $prix): void {
-            $this->prix = $prix;
-        }
-
-        public function setLogin(Utilisateur $login): void {
-            $this->login = $login;
-        }
-
-        public function __construct(int $id, string $villeDepart, string $villeArrivee, string $dateDepart, string $dateArrivee, int $nbPlaces, float $prix, Utilisateur $login) {
+        public function __construct(int $id, string $villeDepart, string $villeArrivee, string $dateDepart, int $nbPlaces, float $prix, string $login) {
             $this->id = $id;
             $this->villeDepart = $villeDepart;
             $this->villeArrivee = $villeArrivee;
             $this->dateDepart = $dateDepart;
-            $this->dateArrivee = $dateArrivee;
             $this->nbPlaces = $nbPlaces;
             $this->prix = $prix;
-            $this->login = $login;
+            $this->conducteurLogin = $login;
         }
 
         public function __toString(): string {
-            return "Trajet : " . $this->id . ", Ville de départ : " . $this->villeDepart . ", Ville d'arrivée : " . $this->villeArrivee . ", Date de départ : " . $this->dateDepart . ", Date d'arrivée : " . $this->dateArrivee . ", Nombre de places : " . $this->nbPlaces . ", Prix : " . $this->prix . ", Login : " . $this->login;
+            return "Trajet #{$this->id} : {$this->villeDepart} → {$this->villeArrivee}, le {$this->dateDepart}, " . "{$this->nbPlaces} places, {$this->prix}€, conducteur : {$this->conducteurLogin}";
         }
-
     }
 ?>
