@@ -11,4 +11,5 @@
     $voiture = new Voiture($_POST['immatriculation'], $_POST['marque'], $_POST['couleur'], $_POST['nbSieges']);
     $voiture->sauvegarder();
 
-    echo "Voiture créée : " . $voiture;
+    echo "Voiture créée : " . $voiture; 
+?>
