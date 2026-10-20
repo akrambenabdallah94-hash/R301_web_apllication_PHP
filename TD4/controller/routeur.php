@@ -1,4 +1,6 @@
 <?php
     require_once 'ControllerVoiture.php';
-    ControllerVoiture::readAll(); // Appel de la méthode readAll() du contrôleur
+    //on recupere l'action passée dans l'URL
+    $action = $_GET['action'] = 'readAll';
+    ControllerVoiture::$action(); // Appel de la méthode readAll() du contrôleur
 ?>
