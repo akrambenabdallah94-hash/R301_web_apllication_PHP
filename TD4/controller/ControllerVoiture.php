@@ -5,16 +5,21 @@
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
         public static function readAll() : void {
             $voitures = ModelVoiture::getVoitures(); // Appel au modèle pour gerer la BDD
-            require __DIR__ . '/../view/voiture/list.php'; //redirige vers la vue
+            ControllerVoiture::afficheVue('list.php', ['voitures' => $voitures]);
         }
 
         public static function read() : void {
             $immatriculation = $_GET['immatriculation']; // Récupère l'immatriculation depuis l'URL, ou une chaîne vide si elle n'est pas définie
             $voiture = ModelVoiture::getVoitureParImmat($immatriculation);
             if($voiture == null){
-                require __DIR__ . '/../view/voiture/error.php'; //redirige vers la vue d'erreur
+                ControllerVoiture::afficheVue('error.php', []);
             }
-            require __DIR__ . '/../view/voiture/detail.php'; //redirige vers la vue
-        }    
+            ControllerVoiture::afficheVue('detail.php', ['voiture' => $voiture]);
+        }
+
+        public static function afficheVue(string $cheminVue, array $parametres=[]) : void{
+            extract($parametres); // Crée des variables à partir du tableau $paramètres
+            require __DIR__ . '/../view/voiture/'. $cheminVue; //Charge la vue spécifiée en paramètre
+        }
     }
 ?>
