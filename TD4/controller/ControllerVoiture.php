@@ -21,5 +21,15 @@
             extract($parametres); // Crée des variables à partir du tableau $paramètres
             require __DIR__ . '/../view/voiture/'. $cheminVue; //Charge la vue spécifiée en paramètre
         }
+
+        public static function created() : void {
+            $voiture = new ModelVoiture();
+            $voiture->setImmatriculation($_POST['immatriculation']);
+            $voiture->setMarque($_POST['marque']);
+            $voiture->setCouleur($_POST['couleur']);
+            $voiture->setNbSieges($_POST['nbSieges']);
+            ModelVoiture::sauvegarder($voiture);
+            ControllerVoiture::afficheVue('created.php', ['voiture' => $voiture]);
+        }
     }
 ?>
