@@ -5,10 +5,13 @@
         <title>Création d'une voiture</title>
     </head>
     <body>
-        <form method="post" action="/../TD4/controller/routeur.php?action=created">
+        <form method="get" action="/../TD4/controller/routeur.php">
             <fieldset>
                 <legend>Mon formulaire :</legend>
 
+                <!-- On ajoute l'action dans un champ caché -->
+                <input type="hidden" name="action" value="created"/>
+                
                 <p>
                     <label for="immat_id">Immatriculation</label> :
                     <input type="text" placeholder="256AB34" name="immatriculation" id="immat_id" required/>
