@@ -22,7 +22,12 @@
             require __DIR__ . '/../view/voiture/'. $cheminVue; //Charge la vue spécifiée en paramètre
         }
 
+        public static function create() : void {
+            ControllerVoiture::afficheVue('create.php', []);
+        }
+
         public static function created() : void {
+            ControllerVoiture::create(); // Affiche le formulaire de création de voiture
             $voiture = ModelVoiture::construire(array(
                 'immatriculation' => $_POST['immatriculation'],
                 'marque' => $_POST['marque'],
@@ -30,7 +35,7 @@
                 'nbSieges' => $_POST['nbSieges']
             ));
             $voiture->sauvegarder();
-            ControllerVoiture::afficheVue('create.php', []);
+            ControllerVoiture::readAll();
         }
     }
 
