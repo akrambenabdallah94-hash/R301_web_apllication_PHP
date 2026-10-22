@@ -1,5 +1,5 @@
 <?php
-    namespace App\Covoiturage\config;
+    namespace App\Covoiturage\Config;
     
     class Conf{
 
