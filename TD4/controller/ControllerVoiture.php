@@ -23,13 +23,16 @@
         }
 
         public static function created() : void {
-            $voiture = new ModelVoiture();
-            $voiture->setImmatriculation($_POST['immatriculation']);
-            $voiture->setMarque($_POST['marque']);
-            $voiture->setCouleur($_POST['couleur']);
-            $voiture->setNbSieges($_POST['nbSieges']);
-            ModelVoiture::sauvegarder($voiture);
-            ControllerVoiture::afficheVue('created.php', ['voiture' => $voiture]);
+            $voiture = ModelVoiture::construire(array(
+                'immatriculation' => $_POST['immatriculation'],
+                'marque' => $_POST['marque'],
+                'couleur' => $_POST['couleur'],
+                'nbSieges' => $_POST['nbSieges']
+            ));
+            $voiture->sauvegarder();
+            ControllerVoiture::afficheVue('create.php', []);
         }
     }
+
+    
 ?>
