@@ -27,12 +27,11 @@
         }
 
         public static function created() : void {
-            ControllerVoiture::create(); // Affiche le formulaire de création de voiture
             $voiture = ModelVoiture::construire(array(
-                'immatriculation' => $_POST['immatriculation'],
-                'marque' => $_POST['marque'],
-                'couleur' => $_POST['couleur'],
-                'nbSieges' => $_POST['nbSieges']
+                'immatriculation' => $_GET['immatriculation'],
+                'marque' => $_GET['marque'],
+                'couleur' => $_GET['couleur'],
+                'nbSieges' => $_GET['nbSieges']
             ));
             $voiture->sauvegarder();
             ControllerVoiture::readAll();
