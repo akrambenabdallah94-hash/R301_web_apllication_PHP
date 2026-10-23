@@ -1,5 +1,5 @@
 <?php
-namespace App\Covoitureage\Lib;
+namespace App\Covoiturage\Lib;
 require_once __DIR__ . '/../Lib/Psr4AutoloaderClass.php';
 
 /**
