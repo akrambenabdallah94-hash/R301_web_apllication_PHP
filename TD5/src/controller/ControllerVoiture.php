@@ -1,8 +1,6 @@
 <?php
     namespace App\Covoiturage\Controller;
-    use App\Covoiturage\Model\Model; // Chargement du modèle
-
-
+    
     class ControllerVoiture{
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
         public static function readAll() : void {

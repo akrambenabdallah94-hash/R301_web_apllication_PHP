@@ -10,7 +10,6 @@
 
     //__DIR__ est une constante magique qui contient le chemin du dossier du fichier en cours d'exécution
     namespace App\Covoiturage\Model\Model;
-    use App\Covoiturage\Config\Conf;
 
     class Model{
         private static $instance = null;

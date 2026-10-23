@@ -1,6 +1,6 @@
 <?php
-        use App\Covoiturage\Model\Model; // Chargement du modèle
-        
+        // Chargement du modèle
+
         class ModelVoiture {
             private string $immatriculation;
             private string $marque;
