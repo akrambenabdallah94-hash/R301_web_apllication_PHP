@@ -1,6 +1,5 @@
 <?php
 namespace App\Covoiturage\Lib;
-require_once __DIR__ . '/../Lib/Psr4AutoloaderClass.php';
 
 /**
  * An example of a general-purpose implementation that includes the optional

@@ -1,5 +1,6 @@
 <?php
-        require_once 'Model.php'; // Chargement du modèle
+        use App\Covoiturage\Model\Model; // Chargement du modèle
+        
         class ModelVoiture {
             private string $immatriculation;
             private string $marque;

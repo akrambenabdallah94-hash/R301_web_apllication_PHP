@@ -1,5 +1,7 @@
 <?php
-    require_once __DIR__ . '/../model/ModelVoiture.php'; // Chargement du modèle
+    namespace App\Covoiturage\Controller;
+    use App\Covoiturage\Model\Model; // Chargement du modèle
+
 
     class ControllerVoiture{
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur

@@ -9,8 +9,8 @@
      */
 
     //__DIR__ est une constante magique qui contient le chemin du dossier du fichier en cours d'exécution
-    require_once __DIR__ . '/../config/Conf.php';
-    use App\Covoiturage\Config\Conf as Conf;
+    namespace App\Covoiturage\Model\Model;
+    use App\Covoiturage\Config\Conf;
 
     class Model{
         private static $instance = null;
