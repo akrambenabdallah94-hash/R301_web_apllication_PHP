@@ -12,7 +12,7 @@
     </p>
 
     <p>
-        <a href="../controller/routeur.php?action=readAll">
+        <a href="../controller/web/frontController.php?action=readAll">
             Retour à la liste des voitures
         </a>
     </p>

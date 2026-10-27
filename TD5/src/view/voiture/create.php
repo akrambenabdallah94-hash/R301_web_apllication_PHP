@@ -5,7 +5,7 @@
         <title>Création d'une voiture</title>
     </head>
     <body>
-        <form method="get" action="/../TD4/controller/routeur.php">
+        <form method="get" action="/../TD5/src/controller/web/frontController.php">
             <fieldset>
                 <legend>Mon formulaire :</legend>
 

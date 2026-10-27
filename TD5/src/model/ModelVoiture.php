@@ -1,5 +1,8 @@
 <?php
-        require_once 'Model.php'; // Chargement du modèle
+        namespace App\Covoiturage\Model; // Chargement du modèle
+        use App\Covoiturage\Model\Model; // (si Model.php est aussi dans le même namespace)
+
+        
         class ModelVoiture {
             private string $immatriculation;
             private string $marque;

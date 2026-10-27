@@ -1,5 +1,6 @@
 <?php
     namespace App\Covoiturage\Controller;
+    use App\Covoiturage\Model\ModelVoiture; // Indispensable pour que le contrôleur trouve la classe
     
     class ControllerVoiture{
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
@@ -26,6 +27,10 @@
             ControllerVoiture::afficheVue('create.php', []);
         }
 
+        public static function delete() : void{
+            ControllerVoiture::afficheVue('delete.php', []);// redirige vers la vue delete
+        }
+
         public static function created() : void {
             $voiture = ModelVoiture::construire(array(
                 'immatriculation' => $_GET['immatriculation'],
@@ -34,6 +39,13 @@
                 'nbSieges' => $_GET['nbSieges']
             ));
             $voiture->sauvegarder();
+            ControllerVoiture::readAll();
+        }
+
+        public static function deleted() : void {
+            $immatriculation = $_GET['immatriculation'];
+            $voiture = ModelVoiture::getVoitureParImmat($immatriculation);
+            $voiture->supprimer();
             ControllerVoiture::readAll();
         }
     }
