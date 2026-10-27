@@ -1,6 +1,5 @@
 <?php
-        // Chargement du modèle
-
+        require_once 'Model.php'; // Chargement du modèle
         class ModelVoiture {
             private string $immatriculation;
             private string $marque;
@@ -87,6 +86,15 @@
                     "couleurTag" => $this->couleur,
                     "nbSiegesTag" => $this->nbSieges
                 ]);
+            }
+
+            public function supprimer() : void {
+                $model = new Model();
+                $sql = "DELETE FROM voiture WHERE immatriculation = :immatriculationTag";
+                $pdoStatement = $model->getPdo()->prepare($sql);
+                $pdoStatement->execute([
+                    "immatriculationTag" => $this->immatriculation,
+                ]); 
             }
             
             public function __construct(string $immatriculation, string $marque, string $couleur, int $nbSieges){

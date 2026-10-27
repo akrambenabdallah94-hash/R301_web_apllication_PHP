@@ -6,10 +6,13 @@
     </head>
     <body>
         <?php 
-        foreach ($voitures as $voiture)
-            echo '<p> Voiture d\'immatriculation ' . $voiture->getImmatriculation() . '.</p>';
+            foreach ($voitures as $voiture){
+            $immat = $voiture->getImmatriculation();
+                echo '<p> Voiture d\'immatriculation ' . $immat . ' '
+                . '<a href="routeur.php?action=read&immatriculation=' . $immat . '">Voir les détails</a> | '
+                . '<a href="routeur.php?action=delete&immatriculation=' . $immat . '">Supprimer</a>'
+                . '</p>';
+            }        
         ?>
-
-        <a href="routeur.php?action=read&immatriculation=A5GT45ON">Voir les détails de A5GT45ON</a>
     </body>
 </html>
