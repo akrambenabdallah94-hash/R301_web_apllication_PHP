@@ -87,6 +87,15 @@
                     "nbSiegesTag" => $this->nbSieges
                 ]);
             }
+
+            public function supprimer() : void {
+                $model = new Model();
+                $sql = "DELETE FROM voiture WHERE immatriculation = :immatriculationTag";
+                $pdoStatement = $model->getPdo()->prepare($sql);
+                $pdoStatement->execute([
+                    "immatriculationTag" => $this->immatriculation,
+                ]); 
+            }
             
             public function __construct(string $immatriculation, string $marque, string $couleur, int $nbSieges){
                 $this->immatriculation = substr($immatriculation,0, 8);

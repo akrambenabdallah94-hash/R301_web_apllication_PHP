@@ -26,6 +26,10 @@
             ControllerVoiture::afficheVue('create.php', []);
         }
 
+        public static function delete() : void{
+            ControllerVoiture::afficheVue('delete.php', []);
+        }
+
         public static function created() : void {
             $voiture = ModelVoiture::construire(array(
                 'immatriculation' => $_GET['immatriculation'],
@@ -36,7 +40,16 @@
             $voiture->sauvegarder();
             ControllerVoiture::readAll();
         }
+
+         public static function deleted() : void {
+            $immatriculation = $_GET['immatriculation'];
+            $voiture = ModelVoiture::getVoitureParImmat($immatriculation);
+            $voiture->supprimer();
+            ControllerVoiture::readAll();
+        }
     }
+
+
 
     
 ?>
