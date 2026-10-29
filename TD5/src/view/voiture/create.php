@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>Création d'une voiture</title>
-    </head>
+
+    <title>Création d'une voiture</title>
+
     <body>
         <form method="get" action="/../TD5/src/controller/web/frontController.php">
             <fieldset>

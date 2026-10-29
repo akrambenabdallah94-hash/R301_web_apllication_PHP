@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>Suppression d'une voiture par l'immatriculation</title>
-    </head>
+
+    <title>Suppression d'une voiture par l'immatriculation</title>
+
     <body>
         <form method="get" action="/../TD5/src/controller/web/frontController.php">
             <fieldset>

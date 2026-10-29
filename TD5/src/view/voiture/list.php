@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Liste des voitures</title>
-    </head>
+    
+    <meta charset="UTF-8">
+    <title>Liste des voitures</title>
+
     <body>
         <?php 
             foreach ($voitures as $voiture){
