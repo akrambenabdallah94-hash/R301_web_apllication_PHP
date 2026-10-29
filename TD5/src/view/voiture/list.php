@@ -7,10 +7,11 @@
     <body>
         <?php 
             foreach ($voitures as $voiture){
-            $immat = $voiture->getImmatriculation();
-                echo '<p> Voiture d\'immatriculation ' . htmlspecialchars($immat) . ' '
-                . '<a href="frontController.php?action=read&immatriculation=' . htmlspecialchars($immat) . '">Voir les détails</a> | '
-                . '<a href="frontController.php?action=delete&immatriculation=' . htmlspecialchars($immat) . '">Supprimer</a>'
+            $immatHTML = $voiture->getImmatriculation();
+            $immatURL = $voiture->getImmatriculation();
+                echo '<p> Voiture d\'immatriculation ' . htmlspecialchars($immatHTML) . ' '
+                . '<a href="frontController.php?action=read&immatriculation=' . rawurlencode($immatURL). '">Voir les détails</a> | '
+                . '<a href="frontController.php?action=delete&immatriculation=' .rawurlencode($immatURL). '">Supprimer</a>'
                 . '</p>';
             }        
         ?>
