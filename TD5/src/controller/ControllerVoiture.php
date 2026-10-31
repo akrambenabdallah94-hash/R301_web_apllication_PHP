@@ -6,16 +6,16 @@
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
         public static function readAll() : void {
             $voitures = ModelVoiture::getVoitures(); // Appel au modèle pour gerer la BDD
-            ControllerVoiture::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => "Listes des voitures", "cheminVueBody" => "voiture/list.php" ]);
+            ControllerVoiture::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => 'Listes des voitures', 'cheminVueBody' => "voiture/list.php" ]);
         }
 
         public static function read() : void {
             $immatriculation = $_GET['immatriculation']; // Récupère l'immatriculation depuis l'URL, ou une chaîne vide si elle n'est pas définie
             $voiture = ModelVoiture::getVoitureParImmat($immatriculation);
             if($voiture == null){
-                ControllerVoiture::afficheVue('voiture/error.php', []);
+                ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "voiture/error.php"]);
             }
-            ControllerVoiture::afficheVue('voiture/detail.php', ['voiture' => $voiture]);
+            ControllerVoiture::afficheVue('view.php', ['voiture' => $voiture, 'pagetitle' => "Détail", 'cheminVueBody' => "voiture/detail.php"]);
         }
 
         public static function afficheVue(string $cheminVue, array $parametres=[]) : void{
@@ -24,11 +24,11 @@
         }
 
         public static function create() : void {
-            ControllerVoiture::afficheVue('voiture/create.php', []);
+            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Creations de voitures", 'chemiVueBody' => "voiture/create.php"]);
         }
 
         public static function delete() : void{
-            ControllerVoiture::afficheVue('voiture/delete.php', []);// redirige vers la vue delete
+            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Suppressions des voitures par immatriculations", 'cheminVueBody' => "voiture/delete.php"]);// redirige vers la vue delete
         }
 
         public static function created() : void {
