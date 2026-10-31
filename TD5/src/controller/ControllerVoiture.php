@@ -39,7 +39,9 @@
                 'nbSieges' => $_GET['nbSieges']
             ));
             $voiture->sauvegarder();
-            ControllerVoiture::readAll();
+            if($voiture != null){
+                ControllerVoiture::afficheVue("view.php", ['pagetitle' => "Creation success", 'cheminVueBody' => "voiture/created.php"]);
+            }
         }
 
         public static function deleted() : void {
