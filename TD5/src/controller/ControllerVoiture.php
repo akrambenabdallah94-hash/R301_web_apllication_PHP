@@ -24,7 +24,7 @@
         }
 
         public static function create() : void {
-            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Creations de voitures", 'chemiVueBody' => "voiture/create.php"]);
+            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Creations de voitures", 'cheminVueBody' => "voiture/create.php"]);
         }
 
         public static function delete() : void{
