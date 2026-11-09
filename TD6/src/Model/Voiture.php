@@ -1,9 +1,9 @@
 <?php
-        namespace App\Covoiturage\Model; // Chargement du modèle
-        use App\Covoiturage\Model\Model; // (si Model.php est aussi dans le même namespace)
+        namespace App\Covoiturage\Voiture; // Chargement du modèle
+        use App\Covoiturage\Model\DatabaseConnection; // (si Model.php est aussi dans le même namespace)
 
         
-        class ModelVoiture {
+        class Voiture {
             private string $immatriculation;
             private string $marque;
             private string $couleur;
@@ -42,8 +42,8 @@
                 $this->nbSieges = $nbSieges;
             }
 
-            public static function construire(array $voitureFormatTableau): ModelVoiture{
-                return new ModelVoiture($voitureFormatTableau["immatriculation"], $voitureFormatTableau["marque"], $voitureFormatTableau["couleur"], $voitureFormatTableau["nbSieges"]);
+            public static function construire(array $voitureFormatTableau): Voiture{
+                return new Voiture($voitureFormatTableau["immatriculation"], $voitureFormatTableau["marque"], $voitureFormatTableau["couleur"], $voitureFormatTableau["nbSieges"]);
             }
 
             public static function getVoitures(): array{
@@ -56,7 +56,7 @@
                 return $voitures;
             }
 
-            public static function getVoitureParImmat(string $immatriculation) : ModelVoiture | null{ 
+            public static function getVoitureParImmat(string $immatriculation) : Voiture | null{ 
                 $sql = "SELECT * FROM voiture WHERE immatriculation = :immatriculationTag";
                 // Préparation de la requête
                 $pdoStatement = Model::getPdo()->prepare($sql);

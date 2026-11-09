@@ -1,6 +1,6 @@
 <?php
     /**
-     * Classe Model
+     * Classe DatabaseConnection
      * 
      * Cette classe est un singleton qui permet de se connecter à la base de données.
      * Elle utilise la classe Conf pour récupérer les informations de connexion.
@@ -9,11 +9,11 @@
      */
 
     //__DIR__ est une constante magique qui contient le chemin du dossier du fichier en cours d'exécution
-    namespace App\Covoiturage\Model;
+    namespace App\Covoiturage\DatabaseConnection; // <-- Ajoute cette ligne
     use App\Covoiturage\Config\Conf; // <-- Ajoute cette ligne
     use PDO;
 
-    class Model{
+    class DatabaseConnection{
         private static $instance = null;
         private $pdo;
         private string $hostname;
@@ -36,7 +36,7 @@
 
         private static function getInstance(){
             if(is_null(static::$instance))
-                static::$instance = new Model();
+                static::$instance = new DatabaseConnection();
             return static::$instance;
         }
     }
