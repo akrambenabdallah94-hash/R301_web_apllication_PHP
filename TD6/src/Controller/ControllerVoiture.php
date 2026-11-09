@@ -43,7 +43,7 @@
                 'couleur' => $_GET['couleur'],
                 'nbSieges' => $_GET['nbSieges']
             ));
-            $voiture->sauvegarder();
+            VoitureRepository::sauvegarder($voiture);
             if($voiture != null){
                 ControllerVoiture::afficheVue("view.php", ['pagetitle' => "Creation success", 'cheminVueBody' => "voiture/created.php"]);
             }
@@ -52,7 +52,7 @@
         public static function deleted() : void {
             $immatriculation = $_GET['immatriculation'];
             $voiture = Voiture::getVoitureParImmat($immatriculation);
-            $voiture->supprimer();
+            VoitureRepository::supprimer($voiture);
             ControllerVoiture::readAll();
         }
     }
