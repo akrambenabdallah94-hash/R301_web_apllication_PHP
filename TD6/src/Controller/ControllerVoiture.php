@@ -1,6 +1,6 @@
 <?php
     namespace App\Covoiturage\Controller;
-    use App\Covoiturage\Model\Voiture; // Indispensable pour que le contrôleur trouve la classe
+    use App\Covoiturage\Model\DataObject; // Indispensable pour que le contrôleur trouve la classe
     
     class ControllerVoiture{
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
