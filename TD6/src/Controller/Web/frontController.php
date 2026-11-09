@@ -11,6 +11,6 @@
     use App\Covoiturage\Controller\ControllerVoiture;
     
     //on récupère l'action passée dans l'URL
-    $action = $_GET['action'] ?? 'create'; // Valeur par défaut si l'action n'est pas définie
+    $action = isset($_GET['action']) ? $_GET['action'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
     ControllerVoiture::$action(); // Appel de la méthode readAll() du contrôleur
 ?>
