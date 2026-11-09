@@ -13,9 +13,14 @@
             $immatriculation = $_GET['immatriculation']; // Récupère l'immatriculation depuis l'URL, ou une chaîne vide si elle n'est pas définie
             $voiture = ModelVoiture::getVoitureParImmat($immatriculation);
             if($voiture == null){
-                ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "voiture/error.php"]);
+                ControllerVoiture::error("Aucune voiture trouvée avec l'immatriculation : " . htmlspecialchars($immatriculation));
+                return;
             }
             ControllerVoiture::afficheVue('view.php', ['voiture' => $voiture, 'pagetitle' => "Détail", 'cheminVueBody' => "voiture/detail.php"]);
+        }
+
+        public static function error(string $errorMessage = "") : void {
+            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "voiture/error.php", 'errorMessage' => $errorMessage]);
         }
 
         public static function afficheVue(string $cheminVue, array $parametres=[]) : void{

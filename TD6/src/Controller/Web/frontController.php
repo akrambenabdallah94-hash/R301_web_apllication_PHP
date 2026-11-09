@@ -12,5 +12,9 @@
     
     //on récupère l'action passée dans l'URL
     $action = isset($_GET['action']) ? $_GET['action'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
-    ControllerVoiture::$action(); // Appel de la méthode readAll() du contrôleur
+    if($action != 'readAll' && $action != 'read' && $action != 'create' && $action != 'delete' && $action != 'created' && $action != 'deleted'){
+        ControllerVoiture::error("Action non reconnue : " . htmlspecialchars($action));
+        return;
+    }
+    ControllerVoiture::$action();
 ?>

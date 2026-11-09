@@ -7,11 +7,19 @@
     <h1>Erreur</h1>
 
     <p>
-        La voiture demandée n'existe pas ou l'immatriculation fournie est invalide.
+        <?php
+            if($errorMessage != ''){
+                $errorMessage = "Problème avec la voiture : " . htmlspecialchars($errorMessage);
+            }else{
+                $errorMessage = "Problème avec la voiture : ou juste Problème avec la voiture si le message est vide.";
+            }
+
+            echo $errorMessage;
+        ?>
     </p>
 
     <p>
-        <a href="../controller/web/frontController.php?action=readAll">
+        <a href="frontController.php?action=readAll">
             Retour à la liste des voitures
         </a>
     </p>

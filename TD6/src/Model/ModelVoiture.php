@@ -72,7 +72,6 @@
                 $voiture = $pdoStatement->fetch();
 
                 if($voiture == false){
-                    echo "Aucune voiture trouvée avec l'immatriculation : {$immatriculation}: ";
                     return null;
                 }
 
