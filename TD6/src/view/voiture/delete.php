@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+    <title>Suppression d'une voiture par l'immatriculation</title>
+
+    <body>
+        <form method="get" action="/../TD6/src/controller/web/frontController.php">
+            <fieldset>
+                <legend>Mon formulaire supprimer une voiture :</legend>
+
+                <!-- On ajoute l'action dans un champ caché -->
+                <input type="hidden" name="action" value="deleted"/>
+                
+                <p>
+                    <label for="immat_id">Immatriculation</label> :
+                    <input type="text" placeholder="256AB34" name="immatriculation" id="immat_id" required/>
+                </p>
+                
+                <p>
+                    <input type="submit" value="Envoyer"/>
+                </p>
+
+            </fieldset>
+        </form>
+    </body>
+</html>
