@@ -53,7 +53,7 @@
             $immatriculation = $_GET['immatriculation'];
             $voiture = VoitureRepository::getVoitureParImmat($immatriculation);
             VoitureRepository::supprimer($voiture);
-            ControllerVoiture::readAll();
+            ControllerVoiture::afficheVue("view.php", ['pagetitle' => "Suppression réussie", 'cheminVueBody' => "voiture/deleted.php"]);
         }
     }
 
