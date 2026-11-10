@@ -1,22 +1,23 @@
 <?php
     namespace App\Covoiturage\Model\Repository;
+    use App\Covoiturage\Model\DataObject\Voiture;
     
 
     class VoitureRepository{
         public static function getVoitures(): array{
-                $model = new Model();
-                $pdoStatement = $model->getPdo()->query('SELECT * FROM voiture');
-                $voitures = [];
-                foreach($pdoStatement as $voitureFormatTableau){
-                    $voitures[] = self::construire($voitureFormatTableau);
-                }
-                return $voitures;
+            $model = new DatabaseConnection();
+            $pdoStatement = $model->getPdo()->query('SELECT * FROM voiture');
+            $voitures = [];
+            foreach($pdoStatement as $voitureFormatTableau){
+                $voitures[] = self::construire($voitureFormatTableau);
             }
+            return $voitures;
+        }
 
         public static function getVoitureParImmat(string $immatriculation) : Voiture | null{ 
             $sql = "SELECT * FROM voiture WHERE immatriculation = :immatriculationTag";
             // Préparation de la requête
-            $pdoStatement = Model::getPdo()->prepare($sql);
+            $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
 
             $values = array(
                 "immatriculationTag" => $immatriculation,
@@ -36,7 +37,7 @@
         }
 
         public static function sauvegarder(Voiture $voiture): bool{
-            $model = new Model();
+            $model = new DatabaseConnection();
             $sql = "INSERT INTO voiture(immatriculation, marque, couleur, nbSieges) VALUES(:immatriculationTag, :marqueTag, :couleurTag, :nbSiegesTag)";
             $pdostatement = $model->getPdo()->prepare($sql);
             $pdostatement->execute([
@@ -51,7 +52,7 @@
 
 
         public static function supprimer(Voiture $voiture) : void {
-            $model = new Model();
+            $model = new DatabaseConnection();
             $sql = "DELETE FROM voiture WHERE immatriculation = :immatriculationTag";
             $pdoStatement = $model->getPdo()->prepare($sql);
             $pdoStatement->execute([

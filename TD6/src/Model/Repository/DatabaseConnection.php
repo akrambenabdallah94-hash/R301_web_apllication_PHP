@@ -9,7 +9,7 @@
      */
 
     //__DIR__ est une constante magique qui contient le chemin du dossier du fichier en cours d'exécution
-    namespace App\Covoiturage\Repository\DatabaseConnection; // <-- Ajoute cette ligne
+    namespace App\Covoiturage\Model\Repository; // <-- Ajoute cette ligne
     use App\Covoiturage\Config\Conf; // <-- Ajoute cette ligne
     use PDO;
 

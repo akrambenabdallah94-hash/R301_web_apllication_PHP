@@ -1,17 +1,17 @@
 <?php
     namespace App\Covoiturage\Controller;
-    use App\Covoiturage\Model\DataObject; // Indispensable pour que le contrôleur trouve la classe
-    
+    use App\Covoiturage\Model\Repository\VoitureRepository; // Indispensable pour que le contrôleur trouve la classe
+
     class ControllerVoiture{
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
         public static function readAll() : void {
-            $voitures = Voiture::getVoitures(); // Appel au modèle pour gerer la BDD
+            $voitures = VoitureRepository::getVoitures(); // Appel au modèle pour gerer la BDD
             ControllerVoiture::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => 'Listes des voitures', 'cheminVueBody' => "voiture/list.php" ]);
         }
 
         public static function read() : void {
             $immatriculation = $_GET['immatriculation']; // Récupère l'immatriculation depuis l'URL, ou une chaîne vide si elle n'est pas définie
-            $voiture = Voiture::getVoitureParImmat($immatriculation);
+            $voiture = VoitureRepository::getVoitureParImmat($immatriculation);
             if($voiture == null){
                 ControllerVoiture::error("Aucune voiture trouvée avec l'immatriculation : " . htmlspecialchars($immatriculation));
                 return;
@@ -37,7 +37,7 @@
         }
 
         public static function created() : void {
-            $voiture = Voiture::construire(array(
+            $voiture = VoitureRepository::construire(array(
                 'immatriculation' => $_GET['immatriculation'],
                 'marque' => $_GET['marque'],
                 'couleur' => $_GET['couleur'],
@@ -51,7 +51,7 @@
 
         public static function deleted() : void {
             $immatriculation = $_GET['immatriculation'];
-            $voiture = Voiture::getVoitureParImmat($immatriculation);
+            $voiture = VoitureRepository::getVoitureParImmat($immatriculation);
             VoitureRepository::supprimer($voiture);
             ControllerVoiture::readAll();
         }
