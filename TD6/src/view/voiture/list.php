@@ -8,7 +8,8 @@
                 echo '<p> Voiture d\'immatriculation ' . htmlspecialchars($immatHTML) . ' '
                 . '<a href="frontController.php?action=read&immatriculation=' . rawurlencode($immatURL). '">Voir les détails</a> | '
                 . '<a href="frontController.php?action=delete&immatriculation=' .rawurlencode($immatURL). '">Supprimer</a> | '
-                . '<a href="frontController.php?action=update&immatriculation=' .rawurlencode($immatURL). '">Modifier</a>'
+                . '<a href="frontController.php?action=update&immatriculation=' .rawurlencode($immatURL). '">Modifier</a> | '
+                . '<a href="frontController.php?action=create&immatriculation=' .rawurlencode($immatURL). '">Créer</a>' 
                 . '</p>';
             }        
         ?>
