@@ -55,6 +55,29 @@
             VoitureRepository::supprimer($voiture);
             ControllerVoiture::afficheVue("view.php", ['pagetitle' => "Suppression réussie", 'cheminVueBody' => "voiture/deleted.php"]);
         }
+
+        public static function update() : void {
+            $immatriculation = $_GET['immatriculation'];
+            $voiture = VoitureRepository::getVoitureParImmat($immatriculation);
+            if($voiture == null){
+                ControllerVoiture::error("Aucune voiture trouvée avec l'immatriculation : " . htmlspecialchars($immatriculation));
+                return;
+            }
+            ControllerVoiture::afficheVue('view.php', ['voiture' => $voiture, 'pagetitle' => "Mise à jour", 'cheminVueBody' => "voiture/update.php"]);
+        }
+
+        public static function updated() : void {
+            $voiture = VoitureRepository::construire(array(
+                'immatriculation' => $_GET['immatriculation'],
+                'marque' => $_GET['marque'],
+                'couleur' => $_GET['couleur'],
+                'nbSieges' => $_GET['nbSieges']
+            ));
+            VoitureRepository::mettreAJour($voiture);
+            if($voiture != null){
+                ControllerVoiture::afficheVue("view.php", ['voiture' => $voiture, 'pagetitle' => "Mise à jour réussie", 'cheminVueBody' => "voiture/updated.php"]);
+            }
+        }
     }
 
     

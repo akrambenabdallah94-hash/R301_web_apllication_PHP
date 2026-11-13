@@ -60,6 +60,18 @@
             ]); 
         }
 
+        public static function mettreAJour(Voiture $voiture) : void {
+            $model = new DatabaseConnection();
+            $sql = "UPDATE voiture SET marque = :marqueTag, couleur = :couleurTag, nbSieges = :nbSiegesTag WHERE immatriculation = :immatriculationTag";
+            $pdoStatement = $model->getPdo()->prepare($sql);
+            $pdoStatement->execute([
+                "immatriculationTag" => $voiture->getImmatriculation(),
+                "marqueTag" => $voiture->getMarque(),
+                "couleurTag" => $voiture->getCouleur(),
+                "nbSiegesTag" => $voiture->getNbSieges()
+            ]);
+        }
+
         public static function construire(array $voitureFormatTableau): Voiture{
             return new Voiture($voitureFormatTableau["immatriculation"], $voitureFormatTableau["marque"], $voitureFormatTableau["couleur"], $voitureFormatTableau["nbSieges"]);
         }
