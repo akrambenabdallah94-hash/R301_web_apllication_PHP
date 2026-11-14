@@ -21,6 +21,10 @@
     <p>
         <a href="frontController.php?action=readAll">
             Retour à la liste des voitures
+        </a><br><br>
+
+        <a href="frontController.php?action=readAll&controller=utilisateur">
+            Retour à la liste des utilisateurs
         </a>
     </p>
 </body>

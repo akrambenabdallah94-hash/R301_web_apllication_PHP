@@ -9,10 +9,9 @@
       <header> 
             <nav> 
                 <ul>
-                  <li><a href="frontController.php?action=create">crée</a></li>
-                  <li><a href="frontController.php?action=readAll">liste</a></li>
-                  <li><a href="frontController.php?action=readAll&controller=utilisateur">accueil</a></li>
-                  <li><a href="frontController.php?action=readAll&controller=trajet">accueil trajets</a></li>
+                  <li><a href="frontController.php?action=readAll">Voitures</a></li>
+                  <li><a href="frontController.php?action=readAll&controller=utilisateur">Utilisateurs</a></li>
+                  <li><a href="frontController.php?action=readAll&controller=trajet">Trajets</a></li>
                 </ul>
             </nav> 
       </header> 

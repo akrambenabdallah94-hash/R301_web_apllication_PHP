@@ -9,23 +9,34 @@
     
     // IMPORTANTE : On importe la classe avec son namespace complet 
     use App\Covoiturage\Controller\ControllerVoiture;
-    
-    //on récupère l'action passée dans l'URL
-    $action = isset($_GET['action']) ? $_GET['action'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
-    $Allmethods = get_class_methods(ControllerVoiture::class);
-    if(!in_array($action, $Allmethods)){
-        ControllerVoiture::error("Action non reconnue : " . htmlspecialchars($action));
-        return;
-    }
-    ControllerVoiture::$action();
+    use App\Covoiturage\Controller\ControllerUtilisateur;
 
     $Controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';// Si aucun contrôleur n'est précisé, on prend le contrôleur par défaut "voiture"
 
     if($Controller == 'voiture'){
+        //on récupère l'action passée dans l'URL
+        $action = isset($_GET['action']) ? $_GET['action'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
+        $Allmethods = get_class_methods(ControllerVoiture::class);
+        if(!in_array($action, $Allmethods)){
+            ControllerVoiture::error("Action non reconnue : " . htmlspecialchars($action));
+            return;
+        }
+        ControllerVoiture::$action();
         $controllerClassName = ucfirst('App\Covoiturage\Controller\ControllerVoiture::class');
         class_exists($controllerClassName);
+        }else if($Controller == 'utilisateur'){
+            $actionUtilisateur = isset($_GET['actionUtilisateur']) ? $_GET['actionUtilisateur'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
+            $AllmethodsUtilisateur = get_class_methods(ControllerUtilisateur::class);
+            if(!in_array($actionUtilisateur, $AllmethodsUtilisateur)){
+                ControllerUtilisateur::error("Action non reconnue : " . htmlspecialchars($actionUtilisateur));
+                return;
+            }
+            ControllerUtilisateur::$actionUtilisateur();
         }else{
             ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($Controller));
             return;
         }
+    
+
+
 ?>
