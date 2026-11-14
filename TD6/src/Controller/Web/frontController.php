@@ -18,4 +18,16 @@
         return;
     }
     ControllerVoiture::$action();
+
+    $Controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';// Si aucun contrôleur n'est précisé, on prend le contrôleur par défaut "voiture"
+
+    if($Controller == 'voiture'){
+        $controllerClassName = ucfirst('App\Covoiturage\Controller\ControllerVoiture::class');
+        class_exists($controllerClassName);
+        }else{
+            ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($Controller));
+            return;
+        }
+
+
 ?>
