@@ -7,3 +7,6 @@
                 $loginURL = $utilisateur->getLogin();
                 echo '<p> Utilisateur de login ' . htmlspecialchars($loginHTML) . '</p>';
             }
+        ?>
+    </body>
+</html>
