@@ -28,6 +28,4 @@
             ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($Controller));
             return;
         }
-
-
 ?>
