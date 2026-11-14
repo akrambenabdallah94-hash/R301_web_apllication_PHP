@@ -38,8 +38,8 @@
         }
 
 
-        public function __toString(): string {
+        /*public function __toString(): string {
             return "Utilisateur : " . $this->login . ", Nom : " . $this->nom . ", Prénom : " . $this->prenom;
-        }
+        }*/
     }
 ?>
