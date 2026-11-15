@@ -5,28 +5,6 @@
 
     class VoitureRepository extends AbstractRepository {
        
-        public static function getVoitureParImmat(string $immatriculation) : Voiture | null{ 
-            $sql = "SELECT * FROM voiture WHERE immatriculation = :immatriculationTag";
-            // Préparation de la requête
-            $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
-
-            $values = array(
-                "immatriculationTag" => $immatriculation,
-            );
-
-            $pdoStatement->execute($values);
-            //On récupère les résultats comme précédemment
-            //Note : fetch() renvoie false si pas de voiture correspondante
-
-            $voiture = $pdoStatement->fetch();
-
-            if($voiture == false){
-                return null;
-            }
-
-            return static::construire($voiture);
-        }
-
         public static function sauvegarder(Voiture $voiture): bool{
             $model = new DatabaseConnection();
             $sql = "INSERT INTO voiture(immatriculation, marque, couleur, nbSieges) VALUES(:immatriculationTag, :marqueTag, :couleurTag, :nbSiegesTag)";
