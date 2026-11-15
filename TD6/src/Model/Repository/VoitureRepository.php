@@ -3,7 +3,7 @@
     use App\Covoiturage\Model\DataObject\Voiture;
     
 
-    class VoitureRepository{
+    class VoitureRepository extends AbstractRepository {
         public static function getVoitures(): array{
             $model = new DatabaseConnection();
             $pdoStatement = $model->getPdo()->query('SELECT * FROM voiture');

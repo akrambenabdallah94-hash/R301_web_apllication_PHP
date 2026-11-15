@@ -2,7 +2,7 @@
     namespace App\Covoiturage\Model\Repository;
     use App\Covoiturage\Model\DataObject\Trajet;
 
-    class TrajetRepository{
+    class TrajetRepository extends AbstractRepository {
 
         public static function construire(array $trajetFormatTableau): Trajet {
             // Remarque : Si le tableau vient de la BDD, le champ 'login' ou 'utilisateur_login' 

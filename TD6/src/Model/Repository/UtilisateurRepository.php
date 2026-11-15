@@ -2,7 +2,7 @@
     namespace App\Covoiturage\Model\Repository;
     use App\Covoiturage\Model\DataObject\Utilisateur;
 
-    class UtilisateurRepository{ 
+    class UtilisateurRepository extends AbstractRepository { 
          public static function construire(array $utilisateurFormatTableau): Utilisateur {
             return new Utilisateur(
                 $utilisateurFormatTableau["login"], 
