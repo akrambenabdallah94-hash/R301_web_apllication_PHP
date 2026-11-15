@@ -4,7 +4,7 @@
 
     class ControllerTrajet {
         public static function readAll() : void {
-            $trajets = TrajetRepository::getTrajets(); // Appel au modèle pour gerer la BDD
+            $trajets = (new TrajetRepository())->selectAll(); // Appel au modèle pour gerer la BDD
             ControllerTrajet::afficheVue('view.php', ['trajets' => $trajets, 'pagetitle' => 'Listes des trajets', 'cheminVueBody' => "trajet/list.php" ]);
         }  
         

@@ -5,7 +5,7 @@
     class ControllerVoiture{
         // Déclaration de type de retour void : la fonction ne retourne pas de valeur
         public static function readAll() : void {
-            $voitures = VoitureRepository::getVoitures(); // Appel au modèle pour gerer la BDD
+            $voitures = (new VoitureRepository())->selectAll(); // Appel au modèle pour gerer la BDD
             ControllerVoiture::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => 'Listes des voitures', 'cheminVueBody' => "voiture/list.php" ]);
         }
 

@@ -4,16 +4,7 @@
     
 
     class VoitureRepository extends AbstractRepository {
-        public static function getVoitures(): array{
-            $model = new DatabaseConnection();
-            $pdoStatement = $model->getPdo()->query('SELECT * FROM voiture');
-            $voitures = [];
-            foreach($pdoStatement as $voitureFormatTableau){
-                $voitures[] = self::construire($voitureFormatTableau);
-            }
-            return $voitures;
-        }
-
+       
         public static function getVoitureParImmat(string $immatriculation) : Voiture | null{ 
             $sql = "SELECT * FROM voiture WHERE immatriculation = :immatriculationTag";
             // Préparation de la requête
@@ -72,8 +63,12 @@
             ]);
         }
 
-        public static function construire(array $voitureFormatTableau): Voiture{
+        public function construire(array $voitureFormatTableau): Voiture{
             return new Voiture($voitureFormatTableau["immatriculation"], $voitureFormatTableau["marque"], $voitureFormatTableau["couleur"], $voitureFormatTableau["nbSieges"]);
+        }
+
+        public function getNomTable() : string {
+            return "voiture";
         }
     }  
 ?>

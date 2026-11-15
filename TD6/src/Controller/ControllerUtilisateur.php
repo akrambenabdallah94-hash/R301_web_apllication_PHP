@@ -4,7 +4,7 @@ use App\Covoiturage\Model\Repository\UtilisateurRepository; // Indispensable pou
 
 class ControllerUtilisateur{
     public static function readAll() : void {
-        $utilisateurs = UtilisateurRepository::getUtilisateurs(); // Appel au modèle pour gerer la BDD
+        $utilisateurs = (new UtilisateurRepository())->selectAll(); // Appel au modèle pour gerer la BDD
         ControllerUtilisateur::afficheVue('view.php', ['utilisateurs' => $utilisateurs, 'pagetitle' => 'Listes des utilisateurs', 'cheminVueBody' => "utilisateur/list.php" ]);
     }
 

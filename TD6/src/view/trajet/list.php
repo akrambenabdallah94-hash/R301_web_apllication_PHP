@@ -3,8 +3,8 @@
     <body>
         <?php
             foreach($trajets as $trajet){
-                $departHTML = $trajet->getDepart();
-                $arriveeHTML = $trajet->getArrivee();
+                $departHTML = $trajet->getvilleDepart();
+                $arriveeHTML = $trajet->getvilleArrivee();
                 echo '<p> Trajet de ' . htmlspecialchars($departHTML) . ' à ' . htmlspecialchars($arriveeHTML) . '</p>';
             }
         ?>

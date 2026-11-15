@@ -3,7 +3,8 @@
     use App\Covoiturage\Model\DataObject\Utilisateur;
 
     class UtilisateurRepository extends AbstractRepository { 
-         public static function construire(array $utilisateurFormatTableau): Utilisateur {
+        
+         public function construire(array $utilisateurFormatTableau): Utilisateur {
             return new Utilisateur(
                 $utilisateurFormatTableau["login"], 
                 $utilisateurFormatTableau["nom"], 
@@ -11,14 +12,8 @@
             );
         }
 
-        public static function getUtilisateurs(): array {
-            $model = new DatabaseConnection();
-            $pdoStatement = $model->getPdo()->query('SELECT * FROM utilisateur');
-            $utilisateurs = [];
-            foreach($pdoStatement as $utilisateurFormatTableau) {
-                $utilisateurs[] = self::construire($utilisateurFormatTableau);
-            }
-            return $utilisateurs;
+        public function getNomTable() : string {
+            return "utilisateur";
         }
 
         // Méthode utile pour récupérer un utilisateur unique (nécessaire pour associer un Trajet à son créateur)

@@ -22,6 +22,62 @@
             $this->conducteurLogin = $login;
         }
 
+        public function getId(): int {
+            return $this->id;
+        }
+
+        public function getVilleDepart(): string {
+            return $this->villeDepart;
+        }
+
+        public function getVilleArrivee(): string {
+            return $this->villeArrivee;
+        }
+
+        public function getDateDepart(): string {
+            return $this->dateDepart;
+        }
+
+        public function getNbPlaces(): int {
+            return $this->nbPlaces;
+        }
+
+        public function getPrix(): float {
+            return $this->prix;
+        }
+
+        public function getConducteurLogin(): string {
+            return $this->conducteurLogin;
+        }
+
+        public function setId(int $id): void {
+            $this->id = $id;
+        }
+
+        public function setVilleDepart(string $villeDepart): void {
+            $this->villeDepart = $villeDepart;
+        }
+
+        public function setVilleArrivee(string $villeArrivee): void {
+            $this->villeArrivee = $villeArrivee;
+        }
+
+        public function setDateDepart(string $dateDepart): void {
+            $this->dateDepart = $dateDepart;
+        }
+
+        public function setNbPlaces(int $nbPlaces): void {
+            $this->nbPlaces = $nbPlaces;
+        }
+
+        public function setPrix(float $prix): void {
+            $this->prix = $prix;
+        }
+
+        public function setConducteurLogin(string $conducteurLogin): void {
+            $this->conducteurLogin = $conducteurLogin;
+        }
+
         /*public function __toString(): string {
             return "Trajet #{$this->id} : {$this->villeDepart} → {$this->villeArrivee}, le {$this->dateDepart}, " . "{$this->nbPlaces} places, {$this->prix}€, conducteur : {$this->conducteurLogin}";
         }*/
