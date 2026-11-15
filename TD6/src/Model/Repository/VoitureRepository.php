@@ -70,5 +70,9 @@
         public function getNomTable() : string {
             return "voiture";
         }
+
+        public function getNomClePrimaire() : string {
+            return "immatriculation";
+        }
     }  
 ?>

@@ -11,7 +11,7 @@
 
         public static function read() : void {
             $immatriculation = $_GET['immatriculation']; // Récupère l'immatriculation depuis l'URL, ou une chaîne vide si elle n'est pas définie
-            $voiture = VoitureRepository::getVoitureParImmat($immatriculation);
+            $voiture = (new VoitureRepository())->select($immatriculation);
             if($voiture == null){
                 ControllerVoiture::error("Aucune voiture trouvée avec l'immatriculation : " . htmlspecialchars($immatriculation));
                 return;

@@ -3,7 +3,24 @@
     use App\Covoiturage\Model\DataObject\AbstractDataObject; // (si Model.php est aussi dans le même namespace)
 
     abstract class AbstractRepository {
-         // Abstract methods for database operations
+        // Abstract methods for database operations
+
+        public function select(string $valeurClePrimaire) : ?AbstractDataObject {
+            $model = new DatabaseConnection();
+            $sql = "SELECT * FROM " . $this->getNomTable() . " WHERE " . $this->getNomClePrimaire() . " = :valeurClePrimaireTag";
+            $pdoStatement = $model->getPdo()->prepare($sql);
+            $pdoStatement->execute([
+                "valeurClePrimaireTag" => $valeurClePrimaire,
+            ]);
+            $objetFormatTableau = $pdoStatement->fetch();
+            if($objetFormatTableau == false){
+                return null;
+            }
+            return $this->construire($objetFormatTableau);
+        } 
+        
+        public abstract function getNomClePrimaire() : string;
+
         public abstract function getNomTable() : string;
 
         protected abstract function construire(array $objetFormatTableau) : AbstractDataObject;
