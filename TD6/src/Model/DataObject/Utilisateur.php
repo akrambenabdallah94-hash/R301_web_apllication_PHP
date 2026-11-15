@@ -2,7 +2,7 @@
     namespace App\Covoiturage\Model\DataObject;
     use App\Covoiturage\Model\Repository\DatabaseConnection; // (si Model.php est aussi dans le même namespace)
 
-    class Utilisateur {
+    class Utilisateur extends AbstractDataObject {
         private string $login;
         private string $nom;
         private string $prenom;

@@ -3,7 +3,7 @@
         use App\Covoiturage\Model\Repository\DatabaseConnection; // (si Model.php est aussi dans le même namespace)
 
         
-        class Voiture {
+        class Voiture extends AbstractDataObject {
             private string $immatriculation;
             private string $marque;
             private string $couleur;
