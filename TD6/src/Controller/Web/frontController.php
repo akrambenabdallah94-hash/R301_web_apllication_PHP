@@ -10,6 +10,7 @@
     // IMPORTANTE : On importe la classe avec son namespace complet 
     use App\Covoiturage\Controller\ControllerVoiture;
     use App\Covoiturage\Controller\ControllerUtilisateur;
+    use App\Covoiturage\Controller\ControllerTrajet;
 
     $Controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';// Si aucun contrôleur n'est précisé, on prend le contrôleur par défaut "voiture"
 
@@ -32,6 +33,14 @@
                 return;
             }
             ControllerUtilisateur::$actionUtilisateur();
+        }else if($Controller == 'trajet'){
+            $actionTrajet = isset($_GET['actionTrajet']) ? $_GET['actionTrajet'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
+            $AllmethodsTrajet = get_class_methods(ControllerTrajet::class);
+            if(!in_array($actionTrajet, $AllmethodsTrajet)){
+                ControllerTrajet::error("Action non reconnue : " . htmlspecialchars($actionTrajet));
+                return;
+            }
+            ControllerTrajet::$actionTrajet();
         }else{
             ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($Controller));
             return;
