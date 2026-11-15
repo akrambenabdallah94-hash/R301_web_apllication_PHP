@@ -7,45 +7,29 @@
     // register the autoloader 
     $loader->register();
     
-    // IMPORTANTE : On importe la classe avec son namespace complet 
-    use App\Covoiturage\Controller\ControllerVoiture;
-    use App\Covoiturage\Controller\ControllerUtilisateur;
-    use App\Covoiturage\Controller\ControllerTrajet;
+    // On récupère le nom du contrôleur depuis l'URL (par défaut 'voiture')
+    $controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';
 
-    $Controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';// Si aucun contrôleur n'est précisé, on prend le contrôleur par défaut "voiture"
+    // On récupère l'action depuis l'URL (par défaut 'readAll')
+    $action = isset($_GET['action']) ? $_GET['action'] : 'readAll';
 
-    if($Controller == 'voiture'){
-        //on récupère l'action passée dans l'URL
-        $action = isset($_GET['action']) ? $_GET['action'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
-        $Allmethods = get_class_methods(ControllerVoiture::class);
-        if(!in_array($action, $Allmethods)){
-            ControllerVoiture::error("Action non reconnue : " . htmlspecialchars($action));
-            return;
-        }
-        ControllerVoiture::$action();
-        $controllerClassName = ucfirst('App\Covoiturage\Controller\ControllerVoiture::class');
-        class_exists($controllerClassName);
-        }else if($Controller == 'utilisateur'){
-            $actionUtilisateur = isset($_GET['actionUtilisateur']) ? $_GET['actionUtilisateur'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
-            $AllmethodsUtilisateur = get_class_methods(ControllerUtilisateur::class);
-            if(!in_array($actionUtilisateur, $AllmethodsUtilisateur)){
-                ControllerUtilisateur::error("Action non reconnue : " . htmlspecialchars($actionUtilisateur));
-                return;
-            }
-            ControllerUtilisateur::$actionUtilisateur();
-        }else if($Controller == 'trajet'){
-            $actionTrajet = isset($_GET['actionTrajet']) ? $_GET['actionTrajet'] : 'readAll'; // Si aucune action n'est précisée, on prend l'action par défaut "readAll"
-            $AllmethodsTrajet = get_class_methods(ControllerTrajet::class);
-            if(!in_array($actionTrajet, $AllmethodsTrajet)){
-                ControllerTrajet::error("Action non reconnue : " . htmlspecialchars($actionTrajet));
-                return;
-            }
-            ControllerTrajet::$actionTrajet();
-        }else{
-            ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($Controller));
-            return;
-        }
-    
+    // Construction dynamique du nom de la classe du contrôleur (ex: App\Covoiturage\Controller\ControllerVoiture)
+    $controllerClassName = 'App\Covoiturage\Controller\Controller' . ucfirst($controller);
 
+    // 1. On vérifie si la classe du contrôleur existe
+    if (!class_exists($controllerClassName)) {
+        // Si le contrôleur n'existe pas, on affiche une erreur via le contrôleur par défaut
+        App\Covoiturage\Controller\ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($controller));
+        return;
+    }
 
+    // 2. On vérifie si la méthode (l'action) existe dans ce contrôleur
+    $allMethods = get_class_methods($controllerClassName);
+    if (!in_array($action, $allMethods)) {
+        $controllerClassName::error("Action non reconnue : " . htmlspecialchars($action));
+        return;
+    }
+
+    // 3. On appelle dynamiquement la méthode du contrôleur
+    $controllerClassName::$action();
 ?>

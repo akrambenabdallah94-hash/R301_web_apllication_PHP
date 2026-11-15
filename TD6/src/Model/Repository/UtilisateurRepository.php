@@ -16,17 +16,8 @@
             return "utilisateur";
         }
 
-        // Méthode utile pour récupérer un utilisateur unique (nécessaire pour associer un Trajet à son créateur)
-        public static function getUtilisateurByLogin(string $login): ?Utilisateur {
-            $model = new DatabaseConnection();
-            $pdoStatement = $model->getPdo()->prepare('SELECT * FROM utilisateur WHERE login = :loginTag');
-            $pdoStatement->execute(['loginTag' => $login]);
-            $utilisateurFormatTableau = $pdoStatement->fetch();
-            
-            if ($utilisateurFormatTableau) {
-                return self::construire($utilisateurFormatTableau);
-            }
-            return null;
+        public function getNomClePrimaire() : string {
+            return "login";
         }
     }
 ?>
