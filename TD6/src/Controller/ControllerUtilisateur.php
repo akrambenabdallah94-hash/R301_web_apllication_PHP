@@ -9,7 +9,7 @@ class ControllerUtilisateur{
     }
 
     public static function read() : void {
-        $login = $_GET['login'] ?? ""; // Récupère le login depuis l'URL, ou une chaîne vide si elle n'est pas définie
+        $login = $_GET['login']; // Récupère le login depuis l'URL, ou une chaîne vide si elle n'est pas définie
         $utilisateur = (new UtilisateurRepository())->select($login);
         if($utilisateur == null){
             ControllerUtilisateur::error("Aucun utilisateur trouvé avec le login : " . htmlspecialchars($login));
