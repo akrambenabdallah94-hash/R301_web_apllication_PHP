@@ -1,12 +1,13 @@
-<?php /** @var App\Covoiturage\Model\DataObject\Voiture $voiture */ ?>
-<p>
-    Voiture <?= htmlspecialchars($voiture->getMarque()) ?>
-    d'immatriculation <?= htmlspecialchars($voiture->getImmatriculation()) ?>,
-    couleur <?= htmlspecialchars($voiture->getCouleur()) ?>,
-    <?= htmlspecialchars($voiture->getNbSieges()) ?> sièges.
-</p>
-<p>
-    <a href="frontController.php?controller=voiture&amp;action=update&amp;immatriculation=<?= rawurlencode($voiture->getImmatriculation()) ?>">Modifier</a> |
-    <a href="frontController.php?controller=voiture&amp;action=delete&amp;immatriculation=<?= rawurlencode($voiture->getImmatriculation()) ?>">Supprimer</a> |
-    <a href="frontController.php?controller=voiture&amp;action=readAll">Retour à la liste des voitures</a>
-</p>
+<!DOCTYPE html>
+<html>
+    
+    <title>Détails</title>
+
+    <body>
+        <?php 
+            echo htmlspecialchars($voiture->getMarque()) . ' ' . ' d\'immatriculation ' . htmlspecialchars($voiture->getImmatriculation()) . ' Nombres de sièges : ' . htmlspecialchars($voiture->getNbSieges()) . ' Couleur : ' . htmlspecialchars($voiture->getCouleur()) . '<br><br>';
+        ?>
+        <a href="frontController.php?action=update&immatriculation=<?= rawurlencode($voiture->getImmatriculation()) ?>">Modifier la voiture</a><br><br>
+        <a href="frontController.php?action=readAll">Retour à la liste des immatriculations de voitures</a>
+    </body>
+</html>

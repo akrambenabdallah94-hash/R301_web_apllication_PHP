@@ -1,30 +1,35 @@
 <?php
-require_once __DIR__ . '/../../Lib/Psr4AutoloaderClass.php';
+    require_once __DIR__ . '/../../Lib/Psr4AutoloaderClass.php';
+    // instantiate the loader 
+    $loader = new App\Covoiturage\Lib\Psr4AutoloaderClass(); 
+    // register the base directories for the namespace prefix 
+    $loader->addNamespace('App\Covoiturage', __DIR__ . '/../../'); 
+    // register the autoloader 
+    $loader->register();
+    
+    // On récupère le nom du contrôleur depuis l'URL (par défaut 'voiture')
+    $controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';
 
-$loader = new App\Covoiturage\Lib\Psr4AutoloaderClass();
-$loader->addNamespace('App\Covoiturage', __DIR__ . '/../../');
-$loader->register();
+    // On récupère l'action depuis l'URL (par défaut 'readAll')
+    $action = isset($_GET['action']) ? $_GET['action'] : 'readAll';
 
-use App\Covoiturage\Controller\ControllerVoiture;
+    // Construction dynamique du nom de la classe du contrôleur (ex: App\Covoiturage\Controller\ControllerVoiture)
+    $controllerClassName = 'App\Covoiturage\Controller\Controller' . ucfirst($controller);
 
-// Contrôleur (par défaut : voiture) et action (par défaut : readAll)
-$controller = (isset($_GET['controller']) && is_string($_GET['controller'])) ? $_GET['controller'] : 'voiture';
-$action = (isset($_GET['action']) && is_string($_GET['action'])) ? $_GET['action'] : 'readAll';
+    // 1. On vérifie si la classe du contrôleur existe
+    if (!class_exists($controllerClassName)) {
+        // Si le contrôleur n'existe pas, on affiche une erreur via le contrôleur par défaut
+        App\Covoiturage\Controller\ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($controller));
+        return;
+    }
 
-// Ex : "voiture" => "App\Covoiturage\Controller\ControllerVoiture"
-$controllerClassName = 'App\Covoiturage\Controller\Controller' . ucfirst($controller);
+    // 2. On vérifie si la méthode (l'action) existe dans ce contrôleur
+    $allMethods = get_class_methods($controllerClassName);
+    if (!in_array($action, $allMethods)) {
+        $controllerClassName::error("Action non reconnue : " . htmlspecialchars($action));
+        return;
+    }
 
-// 1. Le contrôleur existe-t-il ? (on n'accepte que des lettres pour éviter les noms de classe farfelus)
-if (!preg_match('/^[A-Za-z]+$/', $controller) || !class_exists($controllerClassName)) {
-    ControllerVoiture::error("Contrôleur non reconnu : " . $controller);
-    return;
-}
-
-// 2. L'action est-elle une méthode publique de ce contrôleur ?
-if (!in_array($action, get_class_methods($controllerClassName), true)) {
-    $controllerClassName::error("Action non reconnue : " . $action);
-    return;
-}
-
-// 3. On appelle l'action
-$controllerClassName::$action();
+    // 3. On appelle dynamiquement la méthode du contrôleur
+    $controllerClassName::$action();
+?>

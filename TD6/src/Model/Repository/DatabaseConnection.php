@@ -1,31 +1,43 @@
 <?php
-namespace App\Covoiturage\Model\Repository;
+    /**
+     * Classe DatabaseConnection
+     * 
+     * Cette classe est un singleton qui permet de se connecter à la base de données.
+     * Elle utilise la classe Conf pour récupérer les informations de connexion.
+     * 
+     * @author : Akram Ben Abdallah
+     */
 
-use App\Covoiturage\Config\Conf;
-use PDO;
+    //__DIR__ est une constante magique qui contient le chemin du dossier du fichier en cours d'exécution
+    namespace App\Covoiturage\Model\Repository; // <-- Ajoute cette ligne
+    use App\Covoiturage\Config\Conf; // <-- Ajoute cette ligne
+    use PDO;
 
-/**
- * Singleton de connexion à la base de données (utilise Conf).
- */
-class DatabaseConnection {
-    private static ?DatabaseConnection $instance = null;
-    private PDO $pdo;
+    class DatabaseConnection{
+        private static $instance = null;
+        private $pdo;
+        private string $hostname;
+        private string $login;
+        private string $password;
+        private string $databaseName;
 
-    private function __construct() {
-        $dsn = "mysql:host=" . Conf::getHostname() . ";dbname=" . Conf::getDatabase() . ";charset=utf8";
-        $this->pdo = new PDO($dsn, Conf::getLogin(), Conf::getPassword());
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    }
-
-    public static function getPdo(): PDO {
-        return static::getInstance()->pdo;
-    }
-
-    private static function getInstance(): DatabaseConnection {
-        if (is_null(static::$instance)) {
-            static::$instance = new DatabaseConnection();
+        public static function getPdo(){
+            return static::getInstance()->pdo;
         }
-        return static::$instance;
+
+        public function __construct(){
+            $this->hostname = Conf::getHostname();
+            $this->login = Conf::getLogin();
+            $this->password = Conf::getPassword();
+            $this->databaseName = Conf::getDatabase();
+            $this->pdo = new \PDO("mysql:host={$this->hostname};dbname={$this->databaseName}",$this->login,$this->password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+
+        private static function getInstance(){
+            if(is_null(static::$instance))
+                static::$instance = new DatabaseConnection();
+            return static::$instance;
+        }
     }
-}
+?>

@@ -1,14 +1,12 @@
 <?php
-/** @var App\Covoiturage\Model\DataObject\Utilisateur[] $utilisateurs */
-foreach ($utilisateurs as $utilisateur) {
-    $loginHTML = htmlspecialchars($utilisateur->getLogin());
-    $loginURL = rawurlencode($utilisateur->getLogin());
-    ?>
-    <p>
-        Utilisateur <?= $loginHTML ?> :
-        <a href="frontController.php?controller=utilisateur&amp;action=read&amp;login=<?= $loginURL ?>">Détails</a> |
-        <a href="frontController.php?controller=utilisateur&amp;action=update&amp;login=<?= $loginURL ?>">Modifier</a> |
-        <a href="frontController.php?controller=utilisateur&amp;action=delete&amp;login=<?= $loginURL ?>">Supprimer</a>
-    </p>
-<?php } ?>
-<p><a href="frontController.php?controller=utilisateur&amp;action=create">Créer un utilisateur</a></p>
+    foreach($utilisateurs as $utilisateur){
+        $loginHTML = htmlspecialchars($utilisateur->getLogin());
+        $loginURL = rawurlencode($utilisateur->getLogin());
+        echo '<p> Utilisateur : ' . $loginHTML . ' '
+        . '<a href="frontController.php?action=read&controller=utilisateur&login=' . $loginURL . '">Voir les détails</a> | '
+        . '<a href="frontController.php?action=delete&controller=utilisateur&login=' . $loginURL . '">Supprimer</a> | '
+        . '<a href="frontController.php?action=update&controller=utilisateur&login=' . $loginURL . '">Modifier</a>'
+        . '</p>';
+    }
+?>
+<p><a href="frontController.php?action=create&controller=utilisateur">Créer un utilisateur</a></p>

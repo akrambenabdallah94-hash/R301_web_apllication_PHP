@@ -1,133 +1,69 @@
 <?php
-namespace App\Covoiturage\Controller;
+    namespace App\Covoiturage\Controller;
+    use App\Covoiturage\Model\DataObject\Voiture;
+    use App\Covoiturage\Model\Repository\VoitureRepository; // Indispensable pour que le contrôleur trouve la classe
 
-use App\Covoiturage\Model\DataObject\Voiture;
-use App\Covoiturage\Model\Repository\VoitureRepository;
-use PDOException;
+    class ControllerVoiture{
+        // Déclaration de type de retour void : la fonction ne retourne pas de valeur
+        public static function readAll() : void {
+            $voitures = (new VoitureRepository())->selectAll(); // Appel au modèle pour gerer la BDD
+            ControllerVoiture::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => 'Listes des voitures', 'cheminVueBody' => "voiture/list.php" ]);
+        }
 
-class ControllerVoiture extends GenericController {
+        public static function read() : void {
+            $immatriculation = $_GET['immatriculation']; // Récupère l'immatriculation depuis l'URL, ou une chaîne vide si elle n'est pas définie
+            $voiture = (new VoitureRepository())->select($immatriculation);
+            if($voiture == null){
+                ControllerVoiture::error("Aucune voiture trouvée avec l'immatriculation : " . $immatriculation);
+                return;
+            }
+            ControllerVoiture::afficheVue('view.php', ['voiture' => $voiture, 'pagetitle' => "Détail", 'cheminVueBody' => "voiture/detail.php"]);
+        }
 
-    public static function readAll(): void {
-        $voitures = (new VoitureRepository())->selectAll();
-        self::afficheVue('view.php', [
-            'voitures' => $voitures,
-            'pagetitle' => 'Liste des voitures',
-            'cheminVueBody' => 'voiture/list.php'
-        ]);
+        public static function error(string $errorMessage = "") : void {
+            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "voiture/error.php", 'errorMessage' => $errorMessage]);
+        }
+
+        public static function afficheVue(string $cheminVue, array $parametres=[]) : void{
+            extract($parametres); // Crée des variables à partir du tableau $paramètres
+            require __DIR__ . '/../view/'. $cheminVue; //Charge la vue spécifiée en paramètre
+        }
+
+        public static function create() : void {
+            ControllerVoiture::afficheVue('view.php', ['pagetitle' => "Creations de voitures", 'cheminVueBody' => "voiture/create.php"]);
+        }
+
+        public static function created() : void {
+            $voiture = new Voiture($_GET['immatriculation'], $_GET['marque'], $_GET['couleur'], $_GET['nbSieges']);
+            (new VoitureRepository())->sauvegarder($voiture);
+            $voitures = (new VoitureRepository())->selectAll();
+            ControllerVoiture::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => "Creation success", 'cheminVueBody' => "voiture/created.php"]);
+        }
+
+        public static function delete() : void {
+            $immatriculation = $_GET['immatriculation'];
+            (new VoitureRepository())->delete($immatriculation);
+            $voitures = (new VoitureRepository())->selectAll();
+            ControllerVoiture::afficheVue('view.php', ['immatriculation' => $immatriculation, 'voitures' => $voitures, 'pagetitle' => "Voiture supprimée", 'cheminVueBody' => "voiture/deleted.php"]);
+        }
+
+        public static function update() : void {
+            $immatriculation = $_GET['immatriculation'];
+            $voiture = (new VoitureRepository())->select($immatriculation);
+            if($voiture == null){
+                ControllerVoiture::error("Aucune voiture trouvée avec l'immatriculation : " . $immatriculation);
+                return;
+            }
+            ControllerVoiture::afficheVue('view.php', ['voiture' => $voiture, 'pagetitle' => "Mise à jour", 'cheminVueBody' => "voiture/update.php"]);
+        }
+
+        public static function updated() : void {
+            $voiture = new Voiture($_GET['immatriculation'], $_GET['marque'], $_GET['couleur'], $_GET['nbSieges']);
+            (new VoitureRepository())->update($voiture);
+            $voitures = (new VoitureRepository())->selectAll();
+            ControllerVoiture::afficheVue('view.php', ['immatriculation' => $voiture->getImmatriculation(), 'voitures' => $voitures, 'pagetitle' => "Mise à jour réussie", 'cheminVueBody' => "voiture/updated.php"]);
+        }
     }
 
-    public static function read(): void {
-        $immatriculation = self::param('immatriculation');
-        $voiture = (new VoitureRepository())->select($immatriculation);
-        if ($voiture === null) {
-            self::error("Aucune voiture trouvée avec l'immatriculation : " . $immatriculation);
-            return;
-        }
-        self::afficheVue('view.php', [
-            'voiture' => $voiture,
-            'pagetitle' => 'Détail de la voiture',
-            'cheminVueBody' => 'voiture/detail.php'
-        ]);
-    }
-
-    public static function create(): void {
-        self::afficheVue('view.php', [
-            'pagetitle' => 'Création d\'une voiture',
-            'cheminVueBody' => 'voiture/create.php'
-        ]);
-    }
-
-    public static function created(): void {
-        $voiture = self::voitureDepuisUrl();
-        if ($voiture === null) {
-            self::error("Les données du formulaire sont invalides.");
-            return;
-        }
-        $repository = new VoitureRepository();
-        if (!$repository->sauvegarder($voiture)) {
-            self::error("La voiture n'a pas pu être créée (immatriculation déjà utilisée ?).");
-            return;
-        }
-        self::afficheVue('view.php', [
-            'immatriculation' => $voiture->getImmatriculation(),
-            'voitures' => $repository->selectAll(),
-            'pagetitle' => 'Voiture créée',
-            'cheminVueBody' => 'voiture/created.php'
-        ]);
-    }
-
-    public static function update(): void {
-        $immatriculation = self::param('immatriculation');
-        $voiture = (new VoitureRepository())->select($immatriculation);
-        if ($voiture === null) {
-            self::error("Aucune voiture trouvée avec l'immatriculation : " . $immatriculation);
-            return;
-        }
-        self::afficheVue('view.php', [
-            'voiture' => $voiture,
-            'pagetitle' => 'Mise à jour d\'une voiture',
-            'cheminVueBody' => 'voiture/update.php'
-        ]);
-    }
-
-    public static function updated(): void {
-        $voiture = self::voitureDepuisUrl();
-        $repository = new VoitureRepository();
-        if ($voiture === null) {
-            self::error("Les données du formulaire sont invalides.");
-            return;
-        }
-        if ($repository->select($voiture->getImmatriculation()) === null) {
-            self::error("Aucune voiture trouvée avec l'immatriculation : " . $voiture->getImmatriculation());
-            return;
-        }
-        $repository->update($voiture);
-        self::afficheVue('view.php', [
-            'immatriculation' => $voiture->getImmatriculation(),
-            'voitures' => $repository->selectAll(),
-            'pagetitle' => 'Voiture mise à jour',
-            'cheminVueBody' => 'voiture/updated.php'
-        ]);
-    }
-
-    public static function delete(): void {
-        $immatriculation = self::param('immatriculation');
-        $repository = new VoitureRepository();
-        if ($repository->select($immatriculation) === null) {
-            self::error("Aucune voiture trouvée avec l'immatriculation : " . $immatriculation);
-            return;
-        }
-        try {
-            $repository->delete($immatriculation);
-        } catch (PDOException $e) {
-            self::error("Impossible de supprimer la voiture " . $immatriculation . ".");
-            return;
-        }
-        self::afficheVue('view.php', [
-            'immatriculation' => $immatriculation,
-            'voitures' => $repository->selectAll(),
-            'pagetitle' => 'Voiture supprimée',
-            'cheminVueBody' => 'voiture/deleted.php'
-        ]);
-    }
-
-    public static function error(string $errorMessage = ""): void {
-        self::afficheVue('view.php', [
-            'errorMessage' => $errorMessage,
-            'pagetitle' => "Page d'erreur",
-            'cheminVueBody' => 'voiture/error.php'
-        ]);
-    }
-
-    /** Construit une Voiture à partir de l'URL, ou renvoie null si les données sont invalides. */
-    private static function voitureDepuisUrl(): ?Voiture {
-        $immatriculation = self::param('immatriculation');
-        $marque = self::param('marque');
-        $couleur = self::param('couleur');
-        $nbSieges = self::param('nbSieges');
-        if ($immatriculation === '' || $marque === '' || $couleur === '' || !ctype_digit($nbSieges)) {
-            return null;
-        }
-        return new Voiture($immatriculation, $marque, $couleur, (int)$nbSieges);
-    }
-}
+    
+?>

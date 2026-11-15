@@ -1,10 +1,7 @@
-<?php /** @var App\Covoiturage\Model\DataObject\Utilisateur $utilisateur */ ?>
 <p>
-    <?= htmlspecialchars($utilisateur->getPrenom()) ?> <?= htmlspecialchars($utilisateur->getNom()) ?>
-    (login : <?= htmlspecialchars($utilisateur->getLogin()) ?>)
+    <?= htmlspecialchars($utilisateur->getNom()) ?> <?= htmlspecialchars($utilisateur->getPrenom()) ?> (Login : <?= htmlspecialchars($utilisateur->getLogin()) ?>)
 </p>
 <p>
-    <a href="frontController.php?controller=utilisateur&amp;action=update&amp;login=<?= rawurlencode($utilisateur->getLogin()) ?>">Modifier</a> |
-    <a href="frontController.php?controller=utilisateur&amp;action=delete&amp;login=<?= rawurlencode($utilisateur->getLogin()) ?>">Supprimer</a> |
-    <a href="frontController.php?controller=utilisateur&amp;action=readAll">Retour à la liste des utilisateurs</a>
+    <a href="frontController.php?action=update&controller=utilisateur&login=<?= rawurlencode($utilisateur->getLogin()) ?>">Modifier l'utilisateur</a><br><br>
+    <a href="frontController.php?action=readAll&controller=utilisateur">Retour à la liste des utilisateurs</a>
 </p>
