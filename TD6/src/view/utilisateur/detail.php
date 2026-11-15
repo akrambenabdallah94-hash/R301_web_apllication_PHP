@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-    
-    <title>Détails</title>
-
-    <body>
-        <?php 
-            echo htmlspecialchars($utilisateur->getNom()) . ' ' . htmlspecialchars($utilisateur->getPrenom()) . ' (Login : ' . htmlspecialchars($utilisateur->getLogin()) . ')<br><br>';
-        ?>
-        <a href="frontController.php?action=readAll&controller=utilisateur">Retour à la liste des utilisateurs</a>
-    </body>
-</html>
+<?php /** @var App\Covoiturage\Model\DataObject\Utilisateur $utilisateur */ ?>
+<p>
+    <?= htmlspecialchars($utilisateur->getPrenom()) ?> <?= htmlspecialchars($utilisateur->getNom()) ?>
+    (login : <?= htmlspecialchars($utilisateur->getLogin()) ?>)
+</p>
+<p>
+    <a href="frontController.php?controller=utilisateur&amp;action=update&amp;login=<?= rawurlencode($utilisateur->getLogin()) ?>">Modifier</a> |
+    <a href="frontController.php?controller=utilisateur&amp;action=delete&amp;login=<?= rawurlencode($utilisateur->getLogin()) ?>">Supprimer</a> |
+    <a href="frontController.php?controller=utilisateur&amp;action=readAll">Retour à la liste des utilisateurs</a>
+</p>

@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <?php 
-            foreach ($voitures as $voiture){
-            $immatHTML = $voiture->getImmatriculation();
-            $immatURL = $voiture->getImmatriculation();
-                echo '<p> Voiture d\'immatriculation ' . htmlspecialchars($immatHTML) . ' '
-                . '<a href="frontController.php?action=read&immatriculation=' . rawurlencode($immatURL). '">Voir les détails</a> | '
-                . '<a href="frontController.php?action=delete&immatriculation=' .rawurlencode($immatURL). '">Supprimer</a> | '
-                . '<a href="frontController.php?action=update&immatriculation=' .rawurlencode($immatURL). '">Modifier</a> | '
-                . '<a href="frontController.php?action=create&immatriculation=' .rawurlencode($immatURL). '">Créer</a>' 
-                . '</p>';
-            }        
-        ?>
-    </body>
-</html>
+<?php
+/** @var App\Covoiturage\Model\DataObject\Voiture[] $voitures */
+foreach ($voitures as $voiture) {
+    $immatriculationHTML = htmlspecialchars($voiture->getImmatriculation());
+    $immatriculationURL = rawurlencode($voiture->getImmatriculation());
+    ?>
+    <p>
+        Voiture d'immatriculation <?= $immatriculationHTML ?> :
+        <a href="frontController.php?controller=voiture&amp;action=read&amp;immatriculation=<?= $immatriculationURL ?>">Détails</a> |
+        <a href="frontController.php?controller=voiture&amp;action=update&amp;immatriculation=<?= $immatriculationURL ?>">Modifier</a> |
+        <a href="frontController.php?controller=voiture&amp;action=delete&amp;immatriculation=<?= $immatriculationURL ?>">Supprimer</a>
+    </p>
+<?php } ?>
+<p><a href="frontController.php?controller=voiture&amp;action=create">Créer une voiture</a></p>

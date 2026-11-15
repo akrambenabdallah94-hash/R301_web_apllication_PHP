@@ -1,23 +1,27 @@
 <?php
-    namespace App\Covoiturage\Model\Repository;
-    use App\Covoiturage\Model\DataObject\Utilisateur;
+namespace App\Covoiturage\Model\Repository;
 
-    class UtilisateurRepository extends AbstractRepository { 
-        
-         public function construire(array $utilisateurFormatTableau): Utilisateur {
-            return new Utilisateur(
-                $utilisateurFormatTableau["login"], 
-                $utilisateurFormatTableau["nom"], 
-                $utilisateurFormatTableau["prenom"]
-            );
-        }
+use App\Covoiturage\Model\DataObject\Utilisateur;
 
-        public function getNomTable() : string {
-            return "utilisateur";
-        }
+class UtilisateurRepository extends AbstractRepository {
 
-        public function getNomClePrimaire() : string {
-            return "login";
-        }
+    protected function construire(array $utilisateurFormatTableau): Utilisateur {
+        return new Utilisateur(
+            $utilisateurFormatTableau["login"],
+            $utilisateurFormatTableau["nom"],
+            $utilisateurFormatTableau["prenom"]
+        );
     }
-?>
+
+    protected function getNomTable(): string {
+        return "utilisateur";
+    }
+
+    protected function getNomClePrimaire(): string {
+        return "login";
+    }
+
+    protected function getNomsColonnes(): array {
+        return ["login", "nom", "prenom"];
+    }
+}
