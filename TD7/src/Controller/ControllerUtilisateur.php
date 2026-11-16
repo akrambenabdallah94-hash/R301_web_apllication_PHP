@@ -59,6 +59,19 @@ class ControllerUtilisateur{
         ControllerUtilisateur::afficheVue('view.php', ['login' => $utilisateur->getLogin(), 'utilisateurs' => $utilisateurs, 'pagetitle' => "Mise à jour réussie", 'cheminVueBody' => "utilisateur/updated.php"]);
     }
 
+    public static function deposerCookie() : void { 
+        $login = $_GET['login'];
+        $utilisateur = (new UtilisateurRepository())->select($login);
+        if($utilisateur == null){
+            ControllerUtilisateur::error("Aucun utilisateur trouvé avec le login : " . $login);
+            return;
+        }
+        setcookie('login', $utilisateur->getLogin(), time() + 3600, '/');
+        setcookie('nom', $utilisateur->getNom(), time() + 3600, '/');
+        setcookie('prenom', $utilisateur->getPrenom(), time() + 3600, '/');
+        ControllerUtilisateur::afficheVue('view.php', ['utilisateur' => $utilisateur, 'pagetitle' => "Cookie déposé", 'cheminVueBody' => "utilisateur/deposerCookie.php"]);
+    }
+
     public static function error(string $errorMessage = "") : void {
         ControllerUtilisateur::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "utilisateur/error.php", 'errorMessage' => $errorMessage]);
     }
