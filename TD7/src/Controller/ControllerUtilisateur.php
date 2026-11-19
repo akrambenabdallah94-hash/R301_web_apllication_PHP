@@ -72,6 +72,17 @@ class ControllerUtilisateur{
         ControllerUtilisateur::afficheVue('view.php', ['utilisateur' => $utilisateur, 'pagetitle' => "Cookie déposé", 'cheminVueBody' => "utilisateur/deposerCookie.php"]);
     }
 
+    public static function lireCookie() : void {
+        if(isset($_COOKIE['login']) && isset($_COOKIE['nom']) && isset($_COOKIE['prenom'])) {
+            $login = $_COOKIE['login'];
+            $nom = $_COOKIE['nom'];
+            $prenom = $_COOKIE['prenom'];
+            ControllerUtilisateur::afficheVue('view.php', ['login' => $login, 'nom' => $nom, 'prenom' => $prenom, 'pagetitle' => "Lecture du cookie", 'cheminVueBody' => "utilisateur/lireCookie.php"]);
+        } else {
+            ControllerUtilisateur::error("Aucun cookie trouvé.");
+        }
+    }
+
     public static function error(string $errorMessage = "") : void {
         ControllerUtilisateur::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "utilisateur/error.php", 'errorMessage' => $errorMessage]);
     }
