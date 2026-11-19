@@ -7,3 +7,4 @@
             echo $_COOKIE['prenom'] . '<br>';
         ?>
     </body>
+</html>
