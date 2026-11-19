@@ -2,6 +2,7 @@
 namespace App\Covoiturage\Controller;
 use App\Covoiturage\Model\DataObject\Utilisateur;
 use App\Covoiturage\Model\Repository\UtilisateurRepository; // Indispensable pour que le contrôleur trouve la classe
+use App\Covoiturage\Model\HTTP\Cookie;
 
 class ControllerUtilisateur{
     public static function readAll() : void {
@@ -66,17 +67,17 @@ class ControllerUtilisateur{
             ControllerUtilisateur::error("Aucun utilisateur trouvé avec le login : " . $login);
             return;
         }
-        setcookie('login', $utilisateur->getLogin(), time() + 3600, '/');
-        setcookie('nom', $utilisateur->getNom(), time() + 3600, '/');
-        setcookie('prenom', $utilisateur->getPrenom(), time() + 3600, '/');
+        Cookie::enregistrer('login', $utilisateur->getLogin(), time() + 3600); // Cookie valable 1 heure
+        Cookie::enregistrer('nom', $utilisateur->getNom(), time() + 3600);
+        Cookie::enregistrer('prenom', $utilisateur->getPrenom(), time() + 3600);
         ControllerUtilisateur::afficheVue('view.php', ['utilisateur' => $utilisateur, 'pagetitle' => "Cookie déposé", 'cheminVueBody' => "utilisateur/deposerCookie.php"]);
     }
 
     public static function lireCookie() : void {
         if(isset($_COOKIE['login']) && isset($_COOKIE['nom']) && isset($_COOKIE['prenom'])) {
-            $login = $_COOKIE['login'];
-            $nom = $_COOKIE['nom'];
-            $prenom = $_COOKIE['prenom'];
+            $login = Cookie::lire('login');
+            $nom = Cookie::lire('nom');
+            $prenom = Cookie::lire('prenom');
             ControllerUtilisateur::afficheVue('view.php', ['login' => $login, 'nom' => $nom, 'prenom' => $prenom, 'pagetitle' => "Lecture du cookie", 'cheminVueBody' => "utilisateur/lireCookie.php"]);
         } else {
             ControllerUtilisateur::error("Aucun cookie trouvé.");
