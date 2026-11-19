@@ -74,7 +74,7 @@ class ControllerUtilisateur{
     }
 
     public static function lireCookie() : void {
-        if(isset($_COOKIE['login']) && isset($_COOKIE['nom']) && isset($_COOKIE['prenom'])) {
+        if(Cookie::contient('login') && Cookie::contient('nom') && Cookie::contient('prenom')) {
             $login = Cookie::lire('login');
             $nom = Cookie::lire('nom');
             $prenom = Cookie::lire('prenom');

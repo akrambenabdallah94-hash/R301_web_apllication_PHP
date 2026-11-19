@@ -8,4 +8,8 @@
         public static function lire(string $cle) : mixed {
             return $_COOKIE[$cle];
         }
+
+        public static function contient(string $cle) : bool {
+            return isset($_COOKIE[$cle]);
+        }
     }
