@@ -13,9 +13,7 @@ abstract class GenericController {
         require __DIR__ . '/../view/' . $cheminVue;
     }
 
-    /** Lit un paramètre de l'URL (chaîne vide s'il est absent ou invalide). */
-    protected static function param(string $nom): string {
-        $valeur = $_GET[$nom] ?? '';
-        return is_string($valeur) ? trim($valeur) : '';
+    protected static function error(string $errorMessage="") : void {
+        GenericController::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "trajet/error.php", 'errorMessage' => $errorMessage]);
     }
 }

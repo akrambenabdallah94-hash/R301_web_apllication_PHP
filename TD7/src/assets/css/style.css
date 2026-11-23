@@ -11,6 +11,7 @@ nav {
 /* Liste des liens */
 nav ul {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
   list-style: none;
   margin: 0;
@@ -28,4 +29,11 @@ nav a {
 /* Effet au survol */
 nav a:hover {
   color: #38bdf8;
+}
+
+/* Image dans un lien de liste */
+nav li a img {
+  height: 50px; /* Ajuste selon la taille voulue */
+  width: auto;
+  display: block; /* Évite l'espace réservé sous les images inline */
 }
