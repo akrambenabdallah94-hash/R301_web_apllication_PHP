@@ -83,7 +83,14 @@ class ControllerUtilisateur{
             ControllerUtilisateur::error("Aucun cookie trouvé.");
         }
     }
-
+        
+    public static function supprimerCookie() : void {
+        Cookie::supprimer('login');
+        Cookie::supprimer('nom');
+        Cookie::supprimer('prenom');
+        ControllerUtilisateur::afficheVue('view.php', ['pagetitle' => "Suppression du cookie", 'cheminVueBody' => "utilisateur/supprimerCookie.php"]);
+    }
+        
     public static function error(string $errorMessage = "") : void {
         ControllerUtilisateur::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "utilisateur/error.php", 'errorMessage' => $errorMessage]);
     }

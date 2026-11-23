@@ -12,4 +12,8 @@
         public static function contient(string $cle) : bool {
             return isset($_COOKIE[$cle]);
         }
+
+        public static function supprimer(string $cle) : void { 
+            setcookie($cle, '', time() - 3600);
+        }
     }
