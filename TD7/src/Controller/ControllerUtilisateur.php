@@ -60,7 +60,7 @@ class ControllerUtilisateur{
         ControllerUtilisateur::afficheVue('view.php', ['login' => $utilisateur->getLogin(), 'utilisateurs' => $utilisateurs, 'pagetitle' => "Mise à jour réussie", 'cheminVueBody' => "utilisateur/updated.php"]);
     }
 
-    public static function deposerCookie() : void { 
+    /*public static function deposerCookie() : void { 
         $login = $_GET['login'];
         $utilisateur = (new UtilisateurRepository())->select($login);
         if($utilisateur == null){
@@ -82,7 +82,7 @@ class ControllerUtilisateur{
         } else {
             ControllerUtilisateur::error("Aucun cookie trouvé.");
         }
-    }
+    }*/
         
     public static function supprimerCookie() : void {
         Cookie::supprimer('login');
