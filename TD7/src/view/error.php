@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
-
-<title>Erreur</title>
-
+<head>
+    <meta charset="UTF-8">
+    <title>Erreur</title>
+</head>
 <body>
     <h1>Erreur</h1>
 
     <p>
         <?php
-            if($errorMessage != ''){
-                $errorMessage = "Problème avec la voiture : " . htmlspecialchars($errorMessage);
-            }else{
-                $errorMessage = "Problème avec la voiture";
+            if (isset($errorMessage) && $errorMessage !== '') {
+                $errorMessage = "Problème : " . htmlspecialchars($errorMessage);
+            } else {
+                $errorMessage = "Une erreur est survenue";
             }
 
             echo $errorMessage;

@@ -7,9 +7,16 @@
     // register the autoloader 
     $loader->register();
     
-    // On récupère le nom du contrôleur depuis l'URL (par défaut 'voiture')
-    $controller = isset($_GET['controller']) ? $_GET['controller'] : 'voiture';
-
+    // 1. Contrôleur demandé dans l'URL
+    // 2. Sinon préférence enregistrée dans le cookie 'controleur_defaut'
+    // 3. Sinon 'voiture' par défaut
+    if (!empty($_GET['controller'])) {
+    $controller = $_GET['controller'];
+    } elseif (!empty($_COOKIE['preferenceControleur'])) {
+        $controller = $_COOKIE['preferenceControleur'];
+    } else {
+        $controller = 'voiture';
+    }
     // On récupère l'action depuis l'URL (par défaut 'readAll')
     $action = isset($_GET['action']) ? $_GET['action'] : 'readAll';
 
@@ -19,14 +26,13 @@
     // 1. On vérifie si la classe du contrôleur existe
     if (!class_exists($controllerClassName)) {
         // Si le contrôleur n'existe pas, on affiche une erreur via le contrôleur par défaut
-        App\Covoiturage\Controller\ControllerVoiture::error("Contrôleur non reconnu : " . htmlspecialchars($controller));
+        App\Covoiturage\Controller\GenericController::error("Contrôleur non reconnu : " . htmlspecialchars($controller));
         return;
     }
 
     // 2. On vérifie si la méthode (l'action) existe dans ce contrôleur
     $allMethods = get_class_methods($controllerClassName);
     if (!in_array($action, $allMethods)) {
-        $controllerClassName::error("Action non reconnue : " . htmlspecialchars($action));
         return;
     }
 

@@ -1,5 +1,6 @@
 <?php
 namespace App\Covoiturage\Controller;
+use App\Covoiturage\Lib\PreferenceControleur;
 
 /**
  * Code commun à tous les contrôleurs.
@@ -14,6 +15,16 @@ abstract class GenericController {
     }
 
     protected static function error(string $errorMessage="") : void {
-        GenericController::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "trajet/error.php", 'errorMessage' => $errorMessage]);
+        GenericController::afficheVue('view.php', ['pagetitle' => "Page d'erreur", 'cheminVueBody' => "error.php", 'errorMessage' => $errorMessage]);
+    }
+
+    public static function formulairePreference() : void {
+        GenericController::afficheVue('view.php', ['pagetitle' => "Formulaire de préférence", 'cheminVueBody' => "formulairePreference.php"]);
+    }
+
+    public static function enregistrerPreference() : void {
+        $controleur_default = $_GET['controleur_defaut'];
+        PreferenceControleur::enregistrer($controleur_default);
+        GenericController::afficheVue('view.php', ['pagetitle' => "Préférence enregistrée", 'cheminVueBody' => "enregistrerPreference.php"]);
     }
 }
