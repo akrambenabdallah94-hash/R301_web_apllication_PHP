@@ -3,6 +3,7 @@ namespace App\Covoiturage\Controller;
 use App\Covoiturage\Model\DataObject\Utilisateur;
 use App\Covoiturage\Model\Repository\UtilisateurRepository; // Indispensable pour que le contrôleur trouve la classe
 use App\Covoiturage\Model\HTTP\Cookie;
+use App\Covoiturage\Model\HTTP\Session;
 
 class ControllerUtilisateur extends GenericController {
     public static function readAll() : void {
@@ -79,6 +80,14 @@ class ControllerUtilisateur extends GenericController {
             GenericController::error("Aucun cookie trouvé.");
         }
     }*/
+
+    public static function session(){
+        $login = $_GET['login'];
+        $session = Session::getInstance();
+        $session->enregistrer("Utilisateur", $login);
+        GenericController::afficheVue('view.php', [ 'login' => $login, 'pagetitle' => "Succès Session created !!!", 'cheminVueBody' => "utilisateur/Session_created.php" ]);
+    }
+
         
     public static function supprimerCookie() : void {
         Cookie::supprimer('login');
@@ -87,5 +96,4 @@ class ControllerUtilisateur extends GenericController {
         GenericController::afficheVue('view.php', ['pagetitle' => "Suppression du cookie", 'cheminVueBody' => "utilisateur/supprimerCookie.php"]);
     }
 }
-
 ?>
