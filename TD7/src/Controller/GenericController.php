@@ -19,7 +19,8 @@ abstract class GenericController {
     }
 
     public static function formulairePreference() : void {
-        GenericController::afficheVue('view.php', ['pagetitle' => "Formulaire de préférence", 'cheminVueBody' => "formulairePreference.php"]);
+        $preferenceActuelle = PreferenceControleur::existe() ? PreferenceControleur::lire() : 'voiture';
+        GenericController::afficheVue('view.php', ['pagetitle' => "Formulaire de préférence", 'preferenceActuelle' => $preferenceActuelle, 'cheminVueBody' => "formulairePreference.php"]);
     }
 
     public static function enregistrerPreference() : void {

@@ -8,18 +8,18 @@
         public static function enregistrer(string $preference) : void { 
             Cookie::enregistrer(static::$clePreference, $preference); 
         } 
-        
-        /*public static function lire() : string { 
-            // À compléter 
-            return ""; 
-        } 
-        
+
         public static function existe() : bool { 
-            // À compléter 
+            return Cookie::lire(static::$clePreference);
         } 
+        
+        public static function lire() : string { 
+            return Cookie::lire(static::$clePreference); 
+        } 
+        
         
         public static function supprimer() : void { 
-            // À compléter 
-        } */
+            Cookie::supprimer(static::$clePreference);
+        } 
     }
 ?>

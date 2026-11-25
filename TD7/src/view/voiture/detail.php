@@ -7,7 +7,7 @@
         <?php 
             echo htmlspecialchars($voiture->getMarque()) . ' ' . ' d\'immatriculation ' . htmlspecialchars($voiture->getImmatriculation()) . ' Nombres de sièges : ' . htmlspecialchars($voiture->getNbSieges()) . ' Couleur : ' . htmlspecialchars($voiture->getCouleur()) . '<br><br>';
         ?>
-        <a href="frontController.php?action=update&immatriculation=<?= rawurlencode($voiture->getImmatriculation()) ?>">Modifier la voiture</a><br><br>
+        <a href="frontController.php?action=update&controller=voiture&immatriculation=<?= rawurlencode($voiture->getImmatriculation()) ?>">Modifier la voiture</a><br><br>
         <a href="frontController.php?action=readAll">Retour à la liste des immatriculations de voitures</a>
     </body>
 </html>
