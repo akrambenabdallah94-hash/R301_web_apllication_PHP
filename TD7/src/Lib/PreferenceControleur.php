@@ -10,7 +10,7 @@
         } 
 
         public static function existe() : bool { 
-            return Cookie::lire(static::$clePreference);
+            return Cookie::contient(static::$clePreference);
         } 
         
         public static function lire() : string { 
