@@ -1,5 +1,6 @@
 <?php
     namespace App\Covoiturage\Controller;
+    use App\Covoiturage\Lib\MessageFlash;
     use App\Covoiturage\Model\DataObject\Voiture;
     use App\Covoiturage\Model\Repository\VoitureRepository; // Indispensable pour que le contrôleur trouve la classe
 
@@ -25,17 +26,27 @@
         }
 
         public static function created() : void {
+            // Si un champ du formulaire est manquant : message de danger et retour au formulaire
+            if (empty($_GET['immatriculation']) || empty($_GET['marque']) || empty($_GET['couleur']) || empty($_GET['nbSieges'])) {
+                MessageFlash::ajouter("danger", "Immatriculation, marque, couleur ou nombre de sièges manquant.");
+                GenericController::redirectionVersURL("frontController.php?controller=voiture&action=create");
+            }
+            // Si l'immatriculation existe déjà : message d'avertissement et retour au formulaire
+            if ((new VoitureRepository())->select($_GET['immatriculation']) !== null) {
+                MessageFlash::ajouter("warning", "Immatriculation existante.");
+                GenericController::redirectionVersURL("frontController.php?controller=voiture&action=create");
+            }
             $voiture = new Voiture($_GET['immatriculation'], $_GET['marque'], $_GET['couleur'], $_GET['nbSieges']);
             (new VoitureRepository())->sauvegarder($voiture);
-            $voitures = (new VoitureRepository())->selectAll();
-            GenericController::afficheVue('view.php', ['voitures' => $voitures, 'pagetitle' => "Creation success", 'cheminVueBody' => "voiture/created.php"]);
+            MessageFlash::ajouter("success", "La voiture a bien été créée !");
+            GenericController::redirectionVersURL("frontController.php?controller=voiture&action=readAll");
         }
 
         public static function delete() : void {
             $immatriculation = $_GET['immatriculation'];
             (new VoitureRepository())->delete($immatriculation);
-            $voitures = (new VoitureRepository())->selectAll();
-            GenericController::afficheVue('view.php', ['immatriculation' => $immatriculation, 'voitures' => $voitures, 'pagetitle' => "Voiture supprimée", 'cheminVueBody' => "voiture/deleted.php"]);
+            MessageFlash::ajouter("success", "La voiture d'immatriculation " . $immatriculation . " a bien été supprimée.");
+            GenericController::redirectionVersURL("frontController.php?controller=voiture&action=readAll");
         }
 
         public static function update() : void {
@@ -51,8 +62,8 @@
         public static function updated() : void {
             $voiture = new Voiture($_GET['immatriculation'], $_GET['marque'], $_GET['couleur'], $_GET['nbSieges']);
             (new VoitureRepository())->update($voiture);
-            $voitures = (new VoitureRepository())->selectAll();
-            GenericController::afficheVue('view.php', ['immatriculation' => $voiture->getImmatriculation(), 'voitures' => $voitures, 'pagetitle' => "Mise à jour réussie", 'cheminVueBody' => "voiture/updated.php"]);
+            MessageFlash::ajouter("success", "La voiture d'immatriculation " . $voiture->getImmatriculation() . " a bien été mise à jour.");
+            GenericController::redirectionVersURL("frontController.php?controller=voiture&action=readAll");
         }
     }
 

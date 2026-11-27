@@ -6,6 +6,7 @@
                 <legend>Mon formulaire :</legend>
 
                 <!-- On ajoute l'action dans un champ caché -->
+                <input type="hidden" name="controller" value="voiture"/>
                 <input type="hidden" name="action" value="updated"/>
                 
                 <p>

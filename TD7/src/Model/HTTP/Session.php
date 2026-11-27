@@ -1,6 +1,7 @@
 <?php
     namespace App\Covoiturage\Model\HTTP; 
     
+    use App\Covoiturage\Config\Conf;
     use Exception; 
     
     class Session 
@@ -18,8 +19,11 @@
         } 
     
         public static function getInstance(): Session { 
-            if (is_null(static::$instance)) 
+            if (is_null(static::$instance)) {
                 static::$instance = new Session(); 
+                // On ne vérifie l'expiration qu'au démarrage de la session
+                static::$instance->verifierDerniereActivite();
+            }
             return static::$instance; 
         } 
 
@@ -46,5 +50,11 @@
             // Il faudra reconstruire la session au prochain appel de getInstance() 
             static::$instance = null; 
         }         
+
+        public function verifierDerniereActivite() : void {
+            $dureeExpiration = Conf::getDureeExpirationSession();
+            if (isset($_SESSION['derniereActivite']) && (time() - $_SESSION['derniereActivite'] > $dureeExpiration))
+                session_unset();     // La session a expiré : on vide les variables de session
+            $_SESSION['derniereActivite'] = time(); // On met à jour la date de dernière activité
+        }
     }
-?>

@@ -3,6 +3,9 @@
     
     class Conf{
 
+        // Durée (en secondes) d'inactivité au bout de laquelle une session expire
+        static private int $dureeExpirationSession = 1800; // 30 minutes
+
         static private array $databases = array(
             'hostname'=>'localhost',
             'database'=>'TD2',
@@ -24,6 +27,10 @@
 
         static public function getPassword() : string{
             return static::$databases['password'];
+        }
+
+        static public function getDureeExpirationSession() : int {
+            return static::$dureeExpirationSession;
         }
 
     }

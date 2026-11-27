@@ -12,8 +12,8 @@
     // 3. Sinon 'voiture' par défaut
     if (!empty($_GET['controller'])) {
     $controller = $_GET['controller'];
-    } elseif (!empty($_COOKIE['preferenceControleur'])) {
-        $controller = $_COOKIE['preferenceControleur'];
+    } elseif (App\Covoiturage\Lib\PreferenceControleur::existe()) {
+        $controller = App\Covoiturage\Lib\PreferenceControleur::lire();
     } else {
         $controller = 'voiture';
     }

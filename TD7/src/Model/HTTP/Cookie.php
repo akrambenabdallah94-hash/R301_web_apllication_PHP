@@ -7,7 +7,7 @@
             }else{
                 $dureeExpiration = time() + $dureeExpiration;
             }
-            setcookie($cle, $valeur, $dureeExpiration);
+            setcookie($cle, $valeur, $dureeExpiration, '/'); // Chemin '/' : le cookie est valable pour tout le site
         }
 
         public static function lire(string $cle) : mixed {
@@ -19,6 +19,7 @@
         }
 
         public static function supprimer(string $cle) : void { 
-            setcookie($cle, '', time() - 3600);
+            unset($_COOKIE[$cle]); // On efface le cookie lu par PHP
+            setcookie($cle, '', 1, '/'); // On le supprime chez le client en lui donnant une date d'expiration passée (même chemin qu'à l'enregistrement)
         }
     }

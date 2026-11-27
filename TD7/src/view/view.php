@@ -18,6 +18,12 @@
       </header> 
       <main> 
             <?php 
+            // Affichage des messages flash (success, info, warning, danger)
+            foreach ($messagesFlash as $type => $messagesFlashParType) {
+                foreach ($messagesFlashParType as $messageFlash) {
+                    echo '<div class="alert alert-' . $type . '">' . htmlspecialchars($messageFlash) . '</div>';
+                }
+            }
             require __DIR__ . "/{$cheminVueBody}"; 
             ?> 
       </main> 

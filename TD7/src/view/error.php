@@ -20,7 +20,7 @@
     </p>
 
     <p>
-        <a href="frontController.php?action=readAll">
+        <a href="frontController.php?action=readAll&controller=voiture">
             Retour à la liste des voitures
         </a><br><br>
 
